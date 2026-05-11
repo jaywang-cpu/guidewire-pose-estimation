@@ -1,0 +1,32 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "guidewire_pose_estimation"
+version = "0.0.1"
+description = "Given a fluoroscopic X-ray image, predict the tip location (x, y) and angular orientation (theta) of guidewires."
+authors = [
+  { name = "Jiaqiang Wang" },
+]
+
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    
+]
+requires-python = "~=3.10.0"
+
+
+[tool.ruff]
+line-length = 99
+src = ["guidewire_pose_estimation"]
+include = ["pyproject.toml", "guidewire_pose_estimation/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["guidewire_pose_estimation"]
+force-sort-within-sections = true
+
