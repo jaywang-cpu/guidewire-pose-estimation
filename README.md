@@ -36,6 +36,30 @@ Estimate the 2D tip position (x, y) and the angular orientation θ of each guide
 └── Makefile
 ```
 
+## Getting the large artifacts (dataset + trained weights)
+
+The git repository contains source code, figures, JSON metrics, and the written report. The dataset (571 MB) and the six trained model checkpoints (~150–330 MB each) are too large for the repo itself and are attached to the **v1.0 release**:
+
+**Download page:** <https://github.com/jaywang-cpu/guidewire-pose-estimation/releases/tag/v1.0>
+
+After downloading, place the files like this so the loader and the notebook find them:
+
+```
+data/raw/GuidewireDataset.npz
+data/raw/LICENSE.txt
+guidewire_pose_estimation/checkpoints/*.pth
+```
+
+Or, in one shell command (requires the GitHub CLI `gh`):
+
+```bash
+gh release download v1.0 --repo jaywang-cpu/guidewire-pose-estimation \
+  -p "GuidewireDataset.npz" -p "LICENSE.txt" -D data/raw/
+
+gh release download v1.0 --repo jaywang-cpu/guidewire-pose-estimation \
+  -p "*.pth" -D guidewire_pose_estimation/checkpoints/
+```
+
 ## How to run
 
 ```bash
