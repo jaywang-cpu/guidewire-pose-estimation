@@ -1,0 +1,23 @@
+% Custom header for the guidewire-pose report
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\usepackage{array}
+\usepackage{longtable}
+\renewcommand{\arraystretch}{1.1}
+
+% Slightly tighter section spacing
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1.6ex plus 0.6ex minus 0.4ex}{0.9ex plus 0.3ex}
+\titlespacing*{\subsection}{0pt}{1.3ex plus 0.4ex minus 0.3ex}{0.7ex plus 0.2ex}
+\titlespacing*{\subsubsection}{0pt}{1.1ex plus 0.3ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+% Nicer monospace
+\usepackage[scaled=0.85]{beramono}
+
+% Allow tables and floats to take full width when they need to
+\setlength{\tabcolsep}{6pt}
+
+% Make figures default to a sane size
+\setkeys{Gin}{width=0.92\linewidth, keepaspectratio}

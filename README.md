@@ -36,9 +36,22 @@ Estimate the 2D tip position (x, y) and the angular orientation θ of each guide
 └── Makefile
 ```
 
+## Where to find each deliverable
+
+| Deliverable | Location |
+|---|---|
+| Final written report | [`reports/REPORT.md`](reports/REPORT.md) — Markdown source, in-repo |
+| Final report (PDF) | [`reports/REPORT.pdf`](reports/REPORT.pdf) — generated from the markdown, in-repo |
+| Overleaf-ready LaTeX bundle | [`reports/overleaf_bundle.zip`](reports/overleaf_bundle.zip) — `main.tex` + all figures, drag-and-drop into Overleaf |
+| Source code | `guidewire_pose_estimation/` |
+| Interactive notebook | [`notebooks/main.ipynb`](notebooks/main.ipynb) |
+| Reproducibility smoke test | `guidewire_pose_estimation/smoke_test.py` (run after downloading dataset + checkpoints) |
+| Dataset (571 MB) | v1.0 release attachment, see below |
+| Trained model checkpoints (~150–330 MB each) | v1.0 release attachments, see below |
+
 ## Getting the large artifacts (dataset + trained weights)
 
-The git repository contains source code, figures, JSON metrics, and the written report. The dataset (571 MB) and the six trained model checkpoints (~150–330 MB each) are too large for the repo itself and are attached to the **v1.0 release**:
+The dataset (571 MB) and the trained model checkpoints (~150–330 MB each) are too large for the repo itself and are attached to the **v1.0 release**:
 
 **Download page:** <https://github.com/jaywang-cpu/guidewire-pose-estimation/releases/tag/v1.0>
 

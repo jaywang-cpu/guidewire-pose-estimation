@@ -166,5 +166,12 @@ def get_config(experiment: str = "baseline") -> ExperimentConfig:
             experiment_name="ablation_no_aug",
             data=DataConfig(augment_train=False),
         )
+    elif experiment == "with_augmentation":
+        # Real with-augmentation ablation: enable geometric aug + the
+        # post-augmentation x-resort in dataset.py keeps wire ordering consistent.
+        return ExperimentConfig(
+            experiment_name="ablation_with_aug",
+            data=DataConfig(augment_train=True),
+        )
     else:
         raise ValueError(f"Unknown experiment: {experiment}")

@@ -1,0 +1,50 @@
+{
+  "device": "mps",
+  "tolerances": {
+    "pos_px": 1.0,
+    "ang_deg": 0.5
+  },
+  "rows": [
+    {
+      "name": "baseline",
+      "actual_pos_mean": 124.4202651977539,
+      "actual_ang_mean": 25.4324893951416,
+      "expected_pos_mean": 124.42,
+      "expected_ang_mean": 25.43,
+      "status": "PASS"
+    },
+    {
+      "name": "resnet34",
+      "actual_pos_mean": 105.12419891357422,
+      "actual_ang_mean": 18.457782745361328,
+      "expected_pos_mean": 105.12,
+      "expected_ang_mean": 18.46,
+      "status": "PASS"
+    },
+    {
+      "name": "resnet50",
+      "actual_pos_mean": 121.81698608398438,
+      "actual_ang_mean": 25.344985961914062,
+      "expected_pos_mean": 121.82,
+      "expected_ang_mean": 25.34,
+      "status": "PASS"
+    },
+    {
+      "name": "no_pretrain",
+      "actual_pos_mean": 160.20623779296875,
+      "actual_ang_mean": 23.584640502929688,
+      "expected_pos_mean": 160.21,
+      "expected_ang_mean": 23.58,
+      "status": "PASS"
+    },
+    {
+      "name": "heatmap",
+      "actual_pos_mean": 108.7026596069336,
+      "actual_ang_mean": 20.09806251525879,
+      "expected_pos_mean": 108.7,
+      "expected_ang_mean": 20.1,
+      "status": "PASS"
+    }
+  ],
+  "all_pass": true
+}

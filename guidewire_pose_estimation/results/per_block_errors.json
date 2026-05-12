@@ -1,0 +1,46 @@
+{
+  "model": "ResNet-34",
+  "rows": [
+    {
+      "block_id": 6,
+      "n_images": 10,
+      "pos_mean": 59.50364303588867,
+      "pos_median": 62.44133758544922,
+      "ang_mean": 14.065900802612305,
+      "ang_median": 13.16010856628418
+    },
+    {
+      "block_id": 10,
+      "n_images": 10,
+      "pos_mean": 90.58635711669922,
+      "pos_median": 71.857666015625,
+      "ang_mean": 5.107365131378174,
+      "ang_median": 4.171003341674805
+    },
+    {
+      "block_id": 14,
+      "n_images": 10,
+      "pos_mean": 96.513916015625,
+      "pos_median": 91.55436706542969,
+      "ang_mean": 24.913311004638672,
+      "ang_median": 25.635835647583008
+    },
+    {
+      "block_id": 19,
+      "n_images": 10,
+      "pos_mean": 125.12208557128906,
+      "pos_median": 141.42413330078125,
+      "ang_mean": 14.493517875671387,
+      "ang_median": 11.131036758422852
+    },
+    {
+      "block_id": 28,
+      "n_images": 10,
+      "pos_mean": 153.89503479003906,
+      "pos_median": 139.53611755371094,
+      "ang_mean": 33.70882797241211,
+      "ang_median": 24.437341690063477
+    }
+  ],
+  "note": "Each block_id corresponds to 10 consecutive images from the source dataset, very likely from the same C-arm acquisition. The block index is used as a proxy for anatomical-site / acquisition identity, since no explicit site labels ship with the dataset."
+}

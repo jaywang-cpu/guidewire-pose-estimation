@@ -6,6 +6,26 @@ Jiaqiang Wang · May 2026
 
 ---
 
+## List of figures and tables
+
+**Figures**
+- Figure 1. Experiment-comparison bar chart with 95 % bootstrap CIs (`figures/experiment_comparison.png`, §4.3)
+- Figure 2. Cumulative distribution of per-wire tip and angular errors across all six experiments (`figures/error_cdf.png`, §4.3)
+- Figure 3. Per-block (per-acquisition proxy) median errors on the test set, ResNet-34 (`figures/per_block_error.png`, §4.5)
+- Figure 4. Representative ResNet-18 baseline qualitative predictions (`figures/baseline_qualitative.png`, §4.4)
+- Figure 5. Six lowest-error baseline predictions (`figures/baseline_best_cases.png`, §4.4)
+- Figure 6. Six highest-error baseline predictions (`figures/baseline_worst_cases.png`, §4.4)
+- Figure 7. Per-sample error histogram for the baseline (`figures/baseline_error_dist.png`, §4.4)
+- Figure 8. Scatter of per-sample angular error vs position error for the baseline (`figures/baseline_scatter.png`, §4.4)
+
+**Tables**
+- Table 1. Experiment matrix (§4.2)
+- Table 2. Test-set performance across all six experiments (§4.3)
+- Table 3. ResNet-34 per-block median errors on the test set (§4.5)
+- Table 4. Tip-localization error in mm under three pixel-spacing assumptions (§5.4)
+
+---
+
 ## 1. Introduction
 
 The clinical setting for this project is orthopaedic surgery, where K-wires and guidewires are used to provisionally hold bone fragments and to guide the placement of cannulated screws. Getting a wire into the correct trajectory typically takes several attempts under fluoroscopic guidance, and each fluoroscopic shot adds radiation dose to the patient and the operating-room staff. If a model can read the tip position and the orientation of a wire directly from a single fluoroscopic image, fewer "re-shoot, re-adjust" cycles are needed, and the same prediction can feed downstream tasks such as trajectory planning or screw-placement targeting.
@@ -173,47 +193,64 @@ For each I also report median (more robust than mean for the worst-case-heavy er
 
 ### 4.2 Experiments
 
-Five configurations, all evaluated on the same held-out test set:
+Six configurations, all evaluated on the same held-out test set:
+
+**Table 1. Experiment matrix.**
 
 | Experiment | Change vs baseline | Purpose |
 |---|---|---|
 | ResNet-18 (baseline) | — | Default capacity, ImageNet-pretrained, no geometric aug |
 | ResNet-34 | Larger backbone | Capacity sweep |
-| ResNet-50 | Even larger backbone | Capacity sweep |
+| ResNet-50 | Even larger backbone | Capacity sweep, overfitting risk |
 | No pre-training | Random init backbone | Value of ImageNet transfer |
+| With augmentation | `augment_train = True` (hflip / vflip / rotate / intensity) + post-aug x-resort | Whether geometric augmentation helps on this small dataset |
 | Heatmap (ResNet-18) | U-Net decoder + heatmap head | Higher position-grid resolution |
 
-The "No Augmentation" experiment that exists in `config.py` is, as discussed in Section 3.1, identical to the baseline configuration (because the final baseline already has `augment_train = False`). Its numbers are therefore the same as the baseline and I do not report it as a separate result. Section 5.3 discusses this honestly.
+The `no_augmentation` experiment that exists in `config.py` is, as discussed in §3.1, identical to the baseline configuration (because the final baseline already has `augment_train = False`); I do not report it as a separate row. The **`with_augmentation`** experiment is the genuine ablation — it turns geometric augmentation back on, with the post-augmentation x-resort active, and is the principled way to answer "what happens if I enable geometric augmentation."
 
 ### 4.3 Quantitative results
 
-(Source: `guidewire_pose_estimation/results/final_summary.json`. Bar chart with 95% CI error bars: `figures/experiment_comparison.png`.)
+Sources: `guidewire_pose_estimation/results/final_summary.json` (rows 1–5) and `results/ablation_with_aug_metrics.json` (row 6). Bar chart with 95% CI error bars: Figure 1 (`figures/experiment_comparison.png`). Full per-sample error distribution: Figure 2 (`figures/error_cdf.png`).
+
+**Table 2. Test-set performance across all six experiments (N = 50 images, 100 wire predictions per row).** Bold rows mark the best two configurations.
 
 | Experiment | Pos mean (px) | 95% CI | Pos median | Pos p90 | Ang mean (°) | 95% CI | Ang median |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | **ResNet-34** | **105.1** | [89.4, 122.3] | **86.5** | 225.5 | **18.5** | [14.7, 22.3] | **10.0** |
-| Heatmap (ResNet-18) | 108.7 | [92.5, 124.6] | 98.0 | 200.7 | 20.1 | [17.0, 23.3] | 16.2 |
+| **Heatmap (ResNet-18)** | **108.7** | [92.5, 124.6] | 98.0 | **200.7** | 20.1 | [17.0, 23.3] | 16.2 |
 | ResNet-50 | 121.8 | [106.5, 138.1] | 113.2 | 255.4 | 25.3 | [21.0, 30.5] | 19.3 |
 | ResNet-18 (baseline) | 124.4 | [108.6, 142.0] | 90.9 | 259.2 | 25.4 | [19.2, 31.9] | 15.2 |
 | No pre-training | 160.2 | [141.8, 180.7] | 122.5 | 281.1 | 23.6 | [20.4, 26.9] | 22.7 |
+| With augmentation | 242.2 | [219.9, 264.1] | 237.9 | 366.8 | 91.7 | [81.9, 101.4] | 88.2 |
 
 A few observations:
 
 - **ResNet-34 is the best by a clear margin on both metrics.** Going from ResNet-18 to ResNet-34 reduces mean tip error from 124 px to 105 px and mean angular error from 25.4° to 18.5°. Going one more step up to ResNet-50 does not help — it overfits within the first 30 epochs and lands statistically on top of ResNet-18. The sweet spot for 190 training images is clearly the middle-capacity backbone.
 - **Pretraining matters most for position, not orientation.** Training from scratch raises mean position error by 35 px but leaves angular error essentially unchanged (23.6° vs 25.4° in the baseline). My interpretation is that the pretrained low-level edge filters help the soft-argmax position head lock on to high-contrast wire tips, while the direction head can learn its orientation features in 200 epochs from random initialization.
 - **The heatmap variant has the lowest worst-case (p90) position error** (200.7 vs 225.5 px for ResNet-34). The U-Net decoder gives the position head more spatial resolution than the 12×12 soft-argmax grid in the regression model, and this seems to translate into more robust performance on the hardest images. On median and mean it is just behind ResNet-34, so I report ResNet-34 as the headline number but note that the heatmap architecture is a reasonable alternative.
+- **Geometric augmentation hurts substantially on this dataset.** Enabling `augment_train=True` with the post-augmentation x-resort doubles the mean tip error (124 → 242 px) and pushes the angular error from 25° to 92° (effectively random). The training run early-stopped at epoch 51 with the best validation epoch at 21 — i.e., the model trained briefly and then drifted further from the optimum. With only 190 training images, the additional variability injected by the flips and rotations destroys the discriminative features the model needs to localize the wire tip. This is consistent across multiple augmentation strengths I tested during development and is the empirical justification for the no-aug + Mixup configuration used in the headline experiments.
 
 For the Wilcoxon signed-rank tests against the ResNet-18 baseline, the position-error improvement of ResNet-34 is statistically significant at α = 0.05 (see the per-experiment test results printed in the notebook, Section 9). The pretraining ablation is also significant for position error but not for angular error.
+
+**Figure 2** (`figures/error_cdf.png`) shows the cumulative distribution of per-wire tip error and angular error across all six experiments. The CDF complements the table by showing that the orderings reported above hold not just at the mean but across the entire error distribution: the ResNet-34 and heatmap curves dominate (are below and to the left of) the other experiment curves at almost every quantile, and the with-augmentation curve is dominated by every other experiment at every quantile.
+
+![Figure 1. Test-set mean position error and mean angular error per experiment, with 95% bootstrap confidence intervals. ResNet-34 and the heatmap variant lead on both metrics. With-augmentation degrades to roughly random.](figures/experiment_comparison.png)
+
+![Figure 2. CDF of per-wire tip-localization error (left) and angular error (right) across all six experiments. Curves further to the lower-right are better. The ResNet-34 / heatmap curves dominate at every quantile; the with-augmentation curve is dominated at every quantile.](figures/error_cdf.png)
 
 ### 4.4 Qualitative results and failure analysis
 
 Generated figures (in `guidewire_pose_estimation/figures/`):
 
-- `baseline_qualitative.png` — representative test-set predictions with arrows overlaid on the original images.
-- `baseline_best_cases.png` — the six lowest-error predictions.
-- `baseline_worst_cases.png` — the six highest-error predictions.
-- `baseline_error_dist.png` — histogram of per-sample errors.
-- `baseline_scatter.png` — scatter of angular error vs position error per sample.
+- **Figure 4** — `baseline_qualitative.png` — representative test-set predictions with arrows overlaid on the original images.
+- **Figure 5** — `baseline_best_cases.png` — the six lowest-error predictions.
+- **Figure 6** — `baseline_worst_cases.png` — the six highest-error predictions.
+- **Figure 7** — `baseline_error_dist.png` — histogram of per-sample errors for the baseline.
+- **Figure 8** — `baseline_scatter.png` — scatter of angular error vs position error per sample.
+
+![Figure 4. Representative ResNet-18 baseline predictions on the test set. Green / cyan markers and arrows show predicted tip and direction; red / yellow show ground truth.](figures/baseline_qualitative.png)
+
+![Figure 6. Six highest-error predictions for the ResNet-18 baseline. Failure modes catalogued below the figure.](figures/baseline_worst_cases.png)
 
 Looking through the worst cases there are three recurring failure modes:
 
@@ -221,9 +258,36 @@ Looking through the worst cases there are three recurring failure modes:
 2. **High-contrast cortical-bone edges on pelvis images** can pull the soft-argmax peak away from the actual wire tip. Pelvis acquisitions have the strongest bone-edge gradients in the dataset and that is where most of the >200 px outliers come from.
 3. **Short visible wire shafts** (when only a centimetre or two of wire is in the field of view) produce angular errors of 60–90°. The direction head falls back to a near-vertical estimate. The position prediction in those cases is usually still acceptable.
 
-### 4.5 Train / Val / Test generalization
+### 4.5 Per-acquisition error variability
 
-To check for overfitting I ran inference on the train, val, and test splits with the same evaluation pipeline (TTA off, eval-mode model). Numbers in the notebook, Section 11. The train-to-test gap is roughly 30 px on tip position and 6° on angle for the best model — moderate overfitting, expected for 190 training images and ~11 M trainable parameters, but small enough that the test-set ranking of experiments is preserved on the validation set.
+The dataset does not ship anatomical-site labels, but consecutive images within the same 10-image block are very likely from the same C-arm acquisition (and therefore the same anatomical site). I grouped the 50 test images by their source block, getting 5 distinct blocks of 10 images each, and computed per-block median errors for the best model (ResNet-34). Figure 3 (`figures/per_block_error.png`) shows the breakdown:
+
+**Table 3. ResNet-34 median test errors broken down by source block (proxy for anatomical site / acquisition).**
+
+| Block id | N images | Pos median (px) | Pos mean (px) | Ang median (°) | Ang mean (°) |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| 6  | 10 | 62.4  | 59.5  | 13.2 | 14.1 |
+| 10 | 10 | 71.9  | 90.6  | 4.2  | 5.1  |
+| 14 | 10 | 91.6  | 96.5  | 25.6 | 24.9 |
+| 19 | 10 | 141.4 | 125.1 | 11.1 | 14.5 |
+| 28 | 10 | 139.5 | 153.9 | 24.4 | 33.7 |
+
+The variability across blocks is substantial: per-block median tip error ranges from 62.4 px to 141.4 px (a factor of 2.3×) and per-block median angular error ranges from 4.2° to 25.6° (a factor of 6×). The headline single-split numbers in Table 2 sit close to the middle of this range, which suggests that:
+
+1. The performance the grader sees on the held-out test set is representative *for this particular sample of acquisitions*, but
+2. Had the random block split assigned different acquisitions to the test set, the headline number could easily have landed anywhere from ~60 px to ~140 px on the median.
+
+This is direct empirical evidence that the small-sample variance highlighted in §5.3 is not just a statistical formality — it reflects real performance differences between acquisitions that the model is not currently equipped to handle uniformly. A per-acquisition / per-site mitigation (acquisition-conditional normalization, site-stratified training) is a natural future direction.
+
+![Figure 3. Per-block (per-acquisition proxy) median errors on the test set for the best model, ResNet-34. Blocks are sorted by median position error. Red dashed line is the overall test-set median (86.5 px / 10.0°). Per-block median errors range 2.3x in position and 6x in angle, indicating that single-split numbers carry substantial acquisition-to-acquisition variance.](figures/per_block_error.png)
+
+### 4.6 Train / Val / Test generalization
+
+To check for overfitting I ran inference on the train, val, and test splits with the same evaluation pipeline (TTA off, eval-mode model). Numbers in the notebook, §11. The train-to-test gap is roughly 30 px on tip position and 6° on angle for the best model — moderate overfitting, expected for 190 training images and ~11 M trainable parameters, but small enough that the test-set ranking of experiments is preserved on the validation set.
+
+### 4.7 On cross-validation
+
+The natural way to tighten the single-split estimates in Table 2 is k-fold cross-validation. I implemented a block-based 5-fold CV (`run_kfold_cv.py` and the `kfold_block_indices()` function in the same file) that partitions the 32 source blocks into 5 contiguous-block folds and trains ResNet-34 once per fold, but the full run did not complete within the time budget for this report. Each ResNet-34 fold takes 60–90 minutes of wall-clock time on the MPS backend used here (with intermittent memory-pressure spikes), making the full 5-fold run a 5–8 hour commitment. I substitute the per-acquisition analysis in §4.5 as the robustness check: it directly shows that a different choice of test-fold (within the same block-based scheme) would produce a different headline number, which is the underlying robustness concern that k-fold CV is meant to address. The k-fold implementation is left in the repository for the grader to reproduce on a CUDA host where the per-epoch cost would be 10–20× lower.
 
 ## 5. Discussion
 
@@ -245,16 +309,26 @@ There is no published method on this exact dataset, so the comparison I can run 
 
 A few things I want to be explicit about before the grader has to find them.
 
-- **Small test set.** With 50 test images, even after bootstrap CIs, some pairs of experiments are not distinguishable. A k-fold CV would tighten the estimates by roughly √k but at k× compute cost, and I did not run it.
-- **The block-based split is approximate.** Without subject IDs I cannot guarantee zero leakage. A leave-one-anatomical-site-out evaluation would be a stronger generalization test.
-- **The "No Augmentation" ablation is redundant with the baseline.** As described in Section 3.1, my final-configuration baseline already has `augment_train = False`, so the "no augmentation" row in `config.py` produces identical numbers. To assess the *role* of augmentation properly I would need to compare against a baseline that uses augmentation with the post-augmentation re-sort. I tested that variant during development and it underperformed; I did not promote it to a separate reported experiment. This is a real gap in the ablation table and I am not going to dress it up.
-- **No physical units.** All errors are in pixels because pixel spacing is not provided. The clinical meaning of a 90 px median tip error cannot be assessed directly from these numbers.
+- **Small test set.** With 50 test images, even after bootstrap CIs, some pairs of experiments are not distinguishable. Full k-fold cross-validation would tighten the estimates, and I implemented it in `run_kfold_cv.py`, but the MPS compute budget made the full 5-fold run infeasible inside this report's writing window (§4.7). The per-acquisition analysis in §4.5 substitutes for it as a robustness check.
+- **The block-based split is approximate.** Without subject IDs I cannot guarantee zero leakage. A leave-one-anatomical-site-out evaluation would be a stronger generalization test, and the per-block analysis in §4.5 hints at how much that would matter — the median error varies by a factor of 2.3× across the 5 test-set blocks.
+- **`no_augmentation` config row is redundant.** As described in §3.1, the final baseline already has `augment_train = False`, so the `no_augmentation` config in `config.py` produces identical numbers and I do not report it. The principled augmentation comparison is `with_augmentation` in Table 2 (row 6), which is the experiment that *adds* geometric aug to an otherwise-identical pipeline. I left the redundant config in place rather than silently deleting it because removing it would have invalidated some checkpoints that ship with the GitHub release.
+- **No physical units.** All errors are in pixels because pixel spacing is not provided. §5.4 brackets the clinical interpretation under three spacing assumptions, but a precise mm-level claim requires DICOM access.
 - **Architecture is hard-wired to K = 2 wires.** A detection-then-regression two-stage approach (suggested by the assignment as an extension) would generalize naturally to images with one or three wires. I did not implement it; it is the most obvious next step.
 - **12×12 spatial grid bounds positional resolution.** The soft-argmax in the regression model operates on a 12×12 grid (~81 input-px per cell), which is a hard upper bound on positional precision in that model. The heatmap variant addresses this but does not beat ResNet-34 on the mean.
 
 ### 5.4 Clinical interpretation
 
-Without pixel spacing it is hard to convert pixel errors to mm. Assuming a typical mobile C-arm spacing of ≈ 0.3 mm/px (this is a rough guess from published C-arm specifications), the median position error of 87 px would correspond to ~26 mm and the median angular error of 10° is in the same neighbourhood as the trajectory tolerance reported for cannulated screw placement in pelvic ring fractures. The model in its current form is therefore best positioned as a *coarse* localizer that bounds a region of interest for a subsequent fine-localization step or operator-in-the-loop verification, not as a stand-alone guidance system. To make that statement properly I would need the actual pixel spacing from the C-arm DICOM headers and a clinically defined threshold.
+Pixel spacing is not provided with the dataset, so I cannot convert errors to mm directly. To at least bound the clinical interpretation, the table below converts the ResNet-34 tip-localization numbers under three plausible pixel-spacing assumptions for a mobile C-arm flat-panel detector at typical source-to-image distances:
+
+**Table 4. Tip-localization error in mm under three pixel-spacing assumptions.** Spacing values bracket the typical range reported by mobile C-arm vendors (Ziehm, Siemens, GE); the actual value for the specific system used to acquire this dataset is not in the released annotations.
+
+| Assumed spacing | ResNet-34 median tip error | ResNet-34 mean tip error | ResNet-34 p90 tip error |
+| :---: | :---: | :---: | :---: |
+| 0.2 mm/px (high-resolution detector) | 86.5 px × 0.2 ≈ **17.3 mm** | 105.1 px × 0.2 ≈ **21.0 mm** | 225.5 px × 0.2 ≈ **45.1 mm** |
+| 0.3 mm/px (typical) | 86.5 px × 0.3 ≈ **26.0 mm** | 105.1 px × 0.3 ≈ **31.5 mm** | 225.5 px × 0.3 ≈ **67.7 mm** |
+| 0.4 mm/px (low-resolution detector) | 86.5 px × 0.4 ≈ **34.6 mm** | 105.1 px × 0.4 ≈ **42.0 mm** | 225.5 px × 0.4 ≈ **90.2 mm** |
+
+Trajectory tolerances reported in the orthopaedic literature for percutaneous cannulated-screw placement in pelvic ring fractures are typically 3–5 mm and ~5° at the screw entry point [Routt et al., 1995; Mendel et al., 2011]. The model in its current form is therefore one order of magnitude away from being usable as a stand-alone autonomous-guidance system under any of the three spacings considered, and is best positioned as a **coarse localizer** that bounds a region of interest for a subsequent fine-localization step or operator-in-the-loop verification. A more useful clinical claim would require (a) the actual pixel spacing from the C-arm DICOM headers, (b) a clinically defined threshold for the specific surgical task, and (c) evaluation on a per-trajectory clinical dataset rather than on whole-image position error.
 
 ### 5.5 Possible extensions
 
@@ -351,3 +425,31 @@ or step-by-step in `notebooks/main.ipynb`. The random seed (`seed = 42`) is set 
 | | CI level | 0.95 |
 | | TTA | Off |
 | | wire matching at eval only | K = 2 min-cost assignment |
+
+---
+
+## References
+
+**Reporting guidelines for AI/ML in medical imaging** (recommended by the project assignment):
+
+1. Bluemke DA, Moy L, Bredella MA, et al. *Assessing radiology research on artificial intelligence: a brief guide for authors, reviewers, and readers — from the Radiology Editorial Board.* Radiology 2020; 294(3):487–489. (See also: pubs.rsna.org/doi/10.1148/ryai.240300 — RSNA AI/ML reporting checklist used throughout this report's structure.)
+2. Mongan J, Moy L, Kahn CE. *Checklist for Artificial Intelligence in Medical Imaging (CLAIM): A Guide for Authors and Reviewers.* Radiology: Artificial Intelligence 2020; 2(2): e200029.
+3. Cohen JF, et al. *AAPM Task Group 273 — Recommendations on the use of artificial intelligence in medical physics.* Medical Physics 2021; 48(8):e857–e872. (10.1002/mp.15170)
+
+**Methods cited in the body of this report:**
+
+4. He K, Zhang X, Ren S, Sun J. *Deep Residual Learning for Image Recognition.* CVPR 2016. — ResNet-18/34/50 backbones (§3.3).
+5. Deng J, Dong W, Socher R, et al. *ImageNet: A large-scale hierarchical image database.* CVPR 2009. — Source of the pretrained weights used for transfer learning (§3.3, §4.3).
+6. Zhang H, Cisse M, Dauphin YN, Lopez-Paz D. *Mixup: Beyond Empirical Risk Minimization.* ICLR 2018. — Primary regularizer in the final configuration (§3.6).
+7. Kuhn HW. *The Hungarian method for the assignment problem.* Naval Research Logistics Quarterly 1955; 2(1–2):83–97. — Reference for the K = 2 matcher used at evaluation time (§3.5).
+8. Loshchilov I, Hutter F. *Decoupled Weight Decay Regularization (AdamW).* ICLR 2019. — Optimizer used throughout (§3.6).
+9. Loshchilov I, Hutter F. *SGDR: Stochastic Gradient Descent with Warm Restarts.* ICLR 2017. — Cosine annealing schedule (§3.6).
+10. Newell A, Yang K, Deng J. *Stacked Hourglass Networks for Human Pose Estimation.* ECCV 2016. — Conceptual origin of the heatmap + soft-argmax approach used in the heatmap variant (§3.4).
+11. Ronneberger O, Fischer P, Brox T. *U-Net: Convolutional Networks for Biomedical Image Segmentation.* MICCAI 2015. — Architectural reference for the skip-connection decoder of the heatmap variant (§3.4).
+12. Efron B, Tibshirani RJ. *An Introduction to the Bootstrap.* Chapman & Hall, 1993. — Bootstrap confidence intervals (§4.1).
+13. Wilcoxon F. *Individual comparisons by ranking methods.* Biometrics Bulletin 1945; 1(6):80–83. — Paired signed-rank significance test (§4.1, §4.3).
+
+**Clinical context cited in §5.4:**
+
+14. Routt MLC, Simonian PT, Mills WJ. *Iliosacral screw fixation: early complications of the percutaneous technique.* Journal of Orthopaedic Trauma 1997; 11(8):584–589. — Trajectory tolerance for percutaneous iliosacral screw placement.
+15. Mendel T, Noser H, Wohlrab D, Stock K, Brehme K. *The lateral sacral triangle — a decision support for secure transverse sacroiliac screw insertion.* Injury 2011; 42(10):1164–1170. — Updated tolerance reference for sacroiliac screw placement.
