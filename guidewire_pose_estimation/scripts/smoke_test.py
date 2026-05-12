@@ -21,9 +21,10 @@ import math
 import torch
 import numpy as np
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "modeling"))
-
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
 from config import get_config
 from dataset import create_dataloaders
 from model import build_model
@@ -50,7 +51,7 @@ def evaluate_one(cfg_name, ckpt_name, device):
     cfg = get_config(cfg_name)
     set_seed(cfg.seed)
     ckpt_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "checkpoints", ckpt_name
+        PKG_DIR, "checkpoints", ckpt_name
     )
     if not os.path.exists(ckpt_path):
         return None, f"checkpoint not found: {ckpt_path}"
@@ -102,7 +103,7 @@ def main():
 
     # Persist a JSON record of the smoke test for the grader
     out_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "results", "smoke_test_results.json"
+        PKG_DIR, "results", "smoke_test_results.json"
     )
     with open(out_path, "w") as f:
         json.dump(

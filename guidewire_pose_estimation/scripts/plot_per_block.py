@@ -16,9 +16,10 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "modeling"))
-
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
 from config import get_config
 from dataset import create_dataloaders, load_data, split_data
 from model import build_model
@@ -43,7 +44,7 @@ def main():
     _, _, test_loader, _ = create_dataloaders(cfg.data, cfg.train)
 
     ckpt_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
+        PKG_DIR,
         "checkpoints", "ablation_resnet34_best.pth",
     )
     model = build_model(cfg.model).to(device)
@@ -112,14 +113,14 @@ def main():
     axes[1].grid(True, alpha=0.3, axis="y")
 
     plt.tight_layout()
-    out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
+    out_dir = os.path.join(PKG_DIR, "figures")
     out_path = os.path.join(out_dir, "per_block_error.png")
     plt.savefig(out_path, dpi=150, bbox_inches="tight")
     print(f"\nSaved per-block figure → {out_path}")
 
     # Save summary
     out_json = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "results", "per_block_errors.json"
+        PKG_DIR, "results", "per_block_errors.json"
     )
     with open(out_json, "w") as f:
         json.dump({

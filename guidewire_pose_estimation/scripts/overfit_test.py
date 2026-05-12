@@ -3,6 +3,15 @@ Overfit test: train on 10 images, no augmentation, high LR.
 Goal: loss → ~0, position error < 5px.
 If this fails, there's a bug in model/loss/data pipeline.
 """
+
+import os
+import sys
+
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
+
 import torch
 import numpy as np
 from config import get_config, DataConfig, TrainConfig, ModelConfig, ExperimentConfig

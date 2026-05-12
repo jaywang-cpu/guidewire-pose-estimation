@@ -9,8 +9,15 @@ Run the complete Guidewire Pose Estimation pipeline:
   7. Save all results
 """
 
+
 import os
 import sys
+
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
+
 import json
 import numpy as np
 import matplotlib

@@ -10,9 +10,10 @@ import os
 import sys
 import json
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "modeling"))
-
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
 from config import get_config
 from dataset import create_dataloaders
 from train import train_experiment, get_device, set_seed

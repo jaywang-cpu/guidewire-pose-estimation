@@ -21,9 +21,10 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "modeling"))
-
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
 from config import get_config
 from dataset import GuidewireDataset, load_data
 from train import train_experiment, get_device, set_seed
@@ -86,7 +87,7 @@ def main():
     K = 5
     cfg = get_config("resnet34")
     cfg.train.checkpoint_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "checkpoints", "kfold"
+        PKG_DIR, "checkpoints", "kfold"
     )
     os.makedirs(cfg.train.checkpoint_dir, exist_ok=True)
 
@@ -152,7 +153,7 @@ def main():
     }
 
     out = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "results", "kfold_summary.json"
+        PKG_DIR, "results", "kfold_summary.json"
     )
     with open(out, "w") as f:
         json.dump(summary, f, indent=2)

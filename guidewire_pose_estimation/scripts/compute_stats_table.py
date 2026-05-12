@@ -8,9 +8,11 @@ import os, sys, json
 import numpy as np
 from scipy.stats import wilcoxon
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results", "per_sample_errors.json")
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
+PATH = os.path.join(PKG_DIR, "results", "per_sample_errors.json")
 with open(PATH) as f:
     raw = json.load(f)
 
@@ -70,7 +72,7 @@ print(f"\nBonferroni-corrected α (k=10): {alpha_bonf:.4f}")
 
 # Save
 out_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "results", "wilcoxon_table.json"
+    PKG_DIR, "results", "wilcoxon_table.json"
 )
 with open(out_path, "w") as f:
     json.dump({"alpha_uncorrected": 0.05,

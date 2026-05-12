@@ -10,31 +10,65 @@ Estimate the 2D tip position (x, y) and the angular orientation θ of each guide
 
 ```
 .
-├── README.md                       # this file
+├── README.md                              # this file — start here
+├── TRAINING_NOTES.md                      # engineering journal (what was tried and why)
+├── Makefile                               # `make create_environment` + `make requirements`
+├── pyproject.toml                         # Python 3.10 package metadata
+├── requirements.txt                       # minimal runtime deps
+│
 ├── reports/
-│   └── REPORT.md                   # final written report (Intro / Materials / Methods / Results / Discussion)
-├── TRAINING_NOTES.md               # debugging journal — failed attempts and how they were diagnosed
+│   ├── REPORT.md                          # written report (Markdown, source of truth)
+│   ├── REPORT.pdf                         # written report (PDF, Overleaf-compiled, Times New Roman)
+│   ├── overleaf_bundle.zip                # full LaTeX project (drop into Overleaf "Upload Project")
+│   ├── latex_header.tex / report.css      # build inputs (kept for transparency)
+│   └── overleaf_bundle/                   # unzipped LaTeX sources (gitignored)
+│
 ├── notebooks/
-│   └── main.ipynb                  # end-to-end notebook
-├── data/raw/
-│   └── GuidewireDataset.npz        # 314 images + tip / direction annotations
-├── guidewire_pose_estimation/      # source package
-│   ├── config.py                   # all hyperparameters (single source of truth)
-│   ├── dataset.py                  # loading, percentile normalization, block split, x-sort
-│   ├── model.py                    # GuidewireRegressionModel, HeatmapGuidewireModel, GuidewireLoss
-│   ├── overfit_test.py             # 10-image overfit sanity check
-│   ├── modeling/
-│   │   ├── train.py                # training loop with early stopping
-│   │   ├── evaluate.py             # bootstrap CI + Wilcoxon + visualisations
-│   │   └── predict.py
-│   ├── run_all.py                  # reproduces every experiment in one shot
-│   ├── checkpoints/                # trained weights (one .pth + one _history.json per experiment)
-│   ├── results/                    # final_summary.json with all metrics
-│   └── figures/                    # PNG figures used in the report
-├── requirements.txt
-├── pyproject.toml
-└── Makefile
+│   └── main.ipynb                         # interactive end-to-end notebook
+│
+├── docs/
+│   └── DLMI Final Project.pdf             # the original assignment specification
+│
+├── data/
+│   └── raw/GuidewireDataset.npz           # 314 images + annotations (download from Release)
+│
+└── guidewire_pose_estimation/             # the importable package
+    ├── __init__.py
+    ├── config.py                          # all hyperparameters (single source of truth)
+    ├── dataset.py                         # loading + percentile-norm + block-split + x-sort
+    ├── model.py                           # GuidewireRegressionModel, HeatmapGuidewireModel, GuidewireLoss
+    ├── modeling/
+    │   ├── train.py                       # training loop, optimizer, schedule, early stopping
+    │   └── evaluate.py                    # inference, bootstrap CI, Wilcoxon, plotting
+    ├── scripts/                           # all entry-point scripts (run from repo root)
+    │   ├── smoke_test.py                  # ★ one-command reproducibility check
+    │   ├── run_all.py                     # end-to-end training of every experiment
+    │   ├── run_with_aug.py                # the "with augmentation" ablation
+    │   ├── run_kfold_cv.py                # 5-fold CV scaffold (see REPORT §V.G)
+    │   ├── overfit_test.py                # 10-image sanity overfit
+    │   ├── plot_cdfs.py                   # per-sample error CDF figure
+    │   ├── plot_per_block.py              # per-acquisition error breakdown
+    │   ├── compute_stats_table.py         # pairwise Wilcoxon + rank-biserial
+    │   └── peek_data.py                   # quick dataset inspection
+    ├── checkpoints/                       # trained weights (*.pth gitignored; download from Release)
+    │   └── *_history.json                 # per-epoch training curves (committed)
+    ├── results/                           # all metric JSONs (final_summary, per_block, Wilcoxon...)
+    └── figures/                           # every PNG figure cited in the report
 ```
+
+### Quick orientation for the grader
+
+| What you want | Where it is |
+|---|---|
+| The headline numbers in one place | [`reports/REPORT.pdf`](reports/REPORT.pdf) §V.B (Table II) |
+| Verify those numbers reproduce | `python guidewire_pose_estimation/scripts/smoke_test.py` |
+| All hyperparameter settings | `guidewire_pose_estimation/config.py` |
+| Hybrid-head model architecture | `guidewire_pose_estimation/model.py` |
+| Training loop | `guidewire_pose_estimation/modeling/train.py` |
+| Bootstrap + Wilcoxon + plotting | `guidewire_pose_estimation/modeling/evaluate.py` |
+| What I tried that did not work | `TRAINING_NOTES.md` |
+| Raw per-experiment metrics | `guidewire_pose_estimation/results/final_summary.json` |
+| Pairwise Wilcoxon p-values + r_rb | `guidewire_pose_estimation/results/wilcoxon_table.json` |
 
 ## Where to find each deliverable
 
@@ -106,21 +140,28 @@ guidewire_pose_estimation/checkpoints/*.pth
 
 ### 3. Run the pipeline
 
+All entry-point scripts live under `guidewire_pose_estimation/scripts/`. Run them from the repository root:
+
 ```bash
-# from the repository root:
-cd guidewire_pose_estimation
+# (a) one-command reproducibility check against the released checkpoints
+#     (~1 min on MPS; expects checkpoints + dataset already downloaded)
+python guidewire_pose_estimation/scripts/smoke_test.py
 
-# (a) end-to-end reproduction of every experiment (a few hours on a GPU):
-python run_all.py
+# (b) end-to-end reproduction of every experiment (a few hours on a GPU)
+python guidewire_pose_estimation/scripts/run_all.py
 
-# (b) one-command reproducibility check against the released checkpoints:
-python smoke_test.py
+# (c) re-generate the per-sample CDF and per-block analysis figures
+python guidewire_pose_estimation/scripts/plot_cdfs.py
+python guidewire_pose_estimation/scripts/plot_per_block.py
 
-# (c) interactive notebook walkthrough:
-jupyter notebook ../notebooks/main.ipynb
+# (d) re-compute the full pairwise Wilcoxon table (REPORT Table 5)
+python guidewire_pose_estimation/scripts/compute_stats_table.py
+
+# (e) interactive notebook walkthrough
+jupyter notebook notebooks/main.ipynb
 ```
 
-The random seed is fixed (`seed = 42`) so the train/val/test split and the training trajectories are deterministic, and `smoke_test.py` will report `Δ = 0.00` against the headline numbers in the report.
+The random seed is fixed (`seed = 42`) throughout, so the train/val/test split and the training trajectories are deterministic. `smoke_test.py` reports `Δ = 0.00` for every released checkpoint against the headline numbers in the report.
 
 ## Final results (test set, N = 50 images, 100 wire predictions)
 

@@ -287,7 +287,7 @@ To check for overfitting I ran inference on the train, val, and test splits with
 
 ### 4.7 On cross-validation
 
-The natural way to tighten the single-split estimates in Table 2 is k-fold cross-validation. I implemented a block-based 5-fold CV (`run_kfold_cv.py` and the `kfold_block_indices()` function in the same file) that partitions the 32 source blocks into 5 contiguous-block folds and trains ResNet-34 once per fold, but the full run did not complete within the time budget for this report. Each ResNet-34 fold takes 60–90 minutes of wall-clock time on the MPS backend used here (with intermittent memory-pressure spikes), making the full 5-fold run a 5–8 hour commitment. I substitute the per-acquisition analysis in §4.5 as the robustness check: it directly shows that a different choice of test-fold (within the same block-based scheme) would produce a different headline number, which is the underlying robustness concern that k-fold CV is meant to address. The k-fold implementation is left in the repository for the grader to reproduce on a CUDA host where the per-epoch cost would be 10–20× lower.
+The natural way to tighten the single-split estimates in Table 2 is k-fold cross-validation. I implemented a block-based 5-fold CV (`scripts/run_kfold_cv.py` and its `kfold_block_indices()` helper) that partitions the 32 source blocks into 5 contiguous-block folds and trains ResNet-34 once per fold, but the full run did not complete within the time budget for this report. Each ResNet-34 fold takes 60–90 minutes of wall-clock time on the MPS backend used here (with intermittent memory-pressure spikes), making the full 5-fold run a 5–8 hour commitment. I substitute the per-acquisition analysis in §4.5 as the robustness check: it directly shows that a different choice of test-fold (within the same block-based scheme) would produce a different headline number, which is the underlying robustness concern that k-fold CV is meant to address. The k-fold implementation is left in the repository for the grader to reproduce on a CUDA host where the per-epoch cost would be 10–20× lower.
 
 ## 5. Discussion
 
@@ -344,23 +344,32 @@ In order of how high I think the return would be:
 ### 6.1 Files
 
 ```
-guidewire_pose_estimation/
-├── config.py                       # all experiment hyperparameters
-├── dataset.py                      # loading, normalization, block split, x-sort
-├── model.py                        # GuidewireRegressionModel, HeatmapGuidewireModel, GuidewireLoss
-├── overfit_test.py                 # 10-image overfit sanity check
+guidewire_pose_estimation/                 # importable package
+├── config.py                              # all experiment hyperparameters
+├── dataset.py                             # loading, normalization, block split, x-sort
+├── model.py                               # GuidewireRegressionModel, HeatmapGuidewireModel, GuidewireLoss
 ├── modeling/
-│   ├── train.py                    # training loop, optimizer/scheduler, early stopping
-│   ├── evaluate.py                 # inference, bootstrap CI, Wilcoxon, plotting
-│   └── predict.py
-├── run_all.py                      # one-shot reproduction of every experiment in Section 4
-├── checkpoints/                    # trained model weights (one per experiment)
-├── results/                        # JSON metrics dump
-└── figures/                        # all PNG figures
+│   ├── train.py                           # training loop, optimizer/scheduler, early stopping
+│   └── evaluate.py                        # inference, bootstrap CI, Wilcoxon, plotting
+├── scripts/                               # entry-point scripts (run from repo root)
+│   ├── smoke_test.py                      # one-command reproducibility verifier
+│   ├── run_all.py                         # full end-to-end pipeline
+│   ├── run_with_aug.py                    # the with-augmentation ablation
+│   ├── run_kfold_cv.py                    # 5-fold CV scaffold (see §4.7)
+│   ├── overfit_test.py                    # 10-image overfit sanity check
+│   ├── plot_cdfs.py                       # per-sample error CDF figure
+│   ├── plot_per_block.py                  # per-acquisition breakdown
+│   ├── compute_stats_table.py             # pairwise Wilcoxon + rank-biserial
+│   └── peek_data.py                       # quick dataset inspection
+├── checkpoints/                           # trained model weights (one per experiment, gitignored)
+├── results/                               # JSON metrics dumps
+└── figures/                               # all PNG figures cited in this report
 notebooks/
-└── main.ipynb                      # interactive end-to-end notebook
+└── main.ipynb                             # interactive end-to-end notebook
 reports/
-└── REPORT.md                       # this document
+├── REPORT.md                              # this document
+├── REPORT.pdf                             # Overleaf-compiled PDF version
+└── overleaf_bundle.zip                    # LaTeX source for the PDF
 ```
 
 ### 6.2 Environment
@@ -385,10 +394,9 @@ In `guidewire_pose_estimation/checkpoints/`, one `.pth` and one `_history.json` 
 make create_environment && conda activate guidewire_pose_estimation && make requirements
 # or:  python3.10 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
 
-cd guidewire_pose_estimation
-python run_all.py          # full end-to-end training + evaluation
-# or:
-python smoke_test.py       # just verify the released checkpoints reproduce the headline numbers
+# from the repository root:
+python guidewire_pose_estimation/scripts/smoke_test.py   # verify released checkpoints
+python guidewire_pose_estimation/scripts/run_all.py      # full end-to-end pipeline
 ```
 
 or step-by-step in `notebooks/main.ipynb`. The random seed (`seed = 42`) is set in every entry point, so a clean run reproduces the numbers in Section 4 exactly.

@@ -13,9 +13,10 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "modeling"))
-
+# Resolve the package directory (parent of this scripts/ folder)
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
 from config import get_config
 from dataset import create_dataloaders
 from model import build_model
@@ -49,9 +50,9 @@ def per_sample_errors(model, loader, device, cfg):
 
 def main():
     device = None
-    out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
-    results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
-    ckpt_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints")
+    out_dir = os.path.join(PKG_DIR, "figures")
+    results_dir = os.path.join(PKG_DIR, "results")
+    ckpt_dir = os.path.join(PKG_DIR, "checkpoints")
     os.makedirs(out_dir, exist_ok=True)
 
     experiments = list(EXPERIMENTS)
