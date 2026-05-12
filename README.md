@@ -75,17 +75,52 @@ gh release download v1.0 --repo jaywang-cpu/guidewire-pose-estimation \
 
 ## How to run
 
-```bash
-conda activate biomedical
-pip install -r requirements.txt
+### 1. Create a Python 3.10 environment
 
-cd guidewire_pose_estimation/guidewire_pose_estimation
-python run_all.py                  # reproduces every experiment, ~ a few hours on a GPU
-# or, interactively:
-jupyter notebook ../../notebooks/main.ipynb
+Pick whichever path you prefer. Both produce an isolated environment with the project's pinned dependencies.
+
+**Option A — conda (recommended, matches the Makefile):**
+```bash
+make create_environment            # conda create --name guidewire_pose_estimation python=3.10
+conda activate guidewire_pose_estimation
+make requirements                  # pip install -r requirements.txt
 ```
 
-Random seed is fixed (`seed = 42`) so the train/val/test split and the training trajectories are deterministic.
+**Option B — plain `venv`:**
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate          # on Windows: .venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Dependencies (`requirements.txt`): PyTorch ≥ 2.0, torchvision, numpy, opencv-python, matplotlib, scipy. GPU is optional — the code automatically falls back from CUDA → MPS (Apple Silicon) → CPU.
+
+### 2. Get the dataset and the trained weights
+
+The dataset (571 MB) and the model checkpoints (~150–330 MB each) live in the v1.0 GitHub release (see the previous section). After downloading, place them as:
+```
+data/raw/GuidewireDataset.npz
+guidewire_pose_estimation/checkpoints/*.pth
+```
+
+### 3. Run the pipeline
+
+```bash
+# from the repository root:
+cd guidewire_pose_estimation
+
+# (a) end-to-end reproduction of every experiment (a few hours on a GPU):
+python run_all.py
+
+# (b) one-command reproducibility check against the released checkpoints:
+python smoke_test.py
+
+# (c) interactive notebook walkthrough:
+jupyter notebook ../notebooks/main.ipynb
+```
+
+The random seed is fixed (`seed = 42`) so the train/val/test split and the training trajectories are deterministic, and `smoke_test.py` will report `Δ = 0.00` against the headline numbers in the report.
 
 ## Final results (test set, N = 50 images, 100 wire predictions)
 

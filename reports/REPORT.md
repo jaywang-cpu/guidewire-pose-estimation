@@ -365,7 +365,7 @@ reports/
 
 ### 6.2 Environment
 
-Python 3.10 (Conda env `biomedical`). Dependencies in `requirements.txt`: PyTorch ≥ 2.0, torchvision, opencv-python, scipy, numpy, matplotlib.
+Python 3.10. Dependencies in `requirements.txt`: PyTorch ≥ 2.0, torchvision, numpy, opencv-python, matplotlib, scipy. The project ships a `Makefile` target `make create_environment` that creates a conda env named `guidewire_pose_estimation` with the right Python version; equivalent `python3.10 -m venv` setup works just as well. GPU is optional — the device selector falls back CUDA → MPS → CPU.
 
 ### 6.3 Trained checkpoints
 
@@ -381,9 +381,14 @@ In `guidewire_pose_estimation/checkpoints/`, one `.pth` and one `_history.json` 
 ### 6.4 How to reproduce
 
 ```bash
-conda activate biomedical
-cd guidewire_pose_estimation/guidewire_pose_estimation
-python run_all.py
+# one-time environment setup (pick one):
+make create_environment && conda activate guidewire_pose_estimation && make requirements
+# or:  python3.10 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+
+cd guidewire_pose_estimation
+python run_all.py          # full end-to-end training + evaluation
+# or:
+python smoke_test.py       # just verify the released checkpoints reproduce the headline numbers
 ```
 
 or step-by-step in `notebooks/main.ipynb`. The random seed (`seed = 42`) is set in every entry point, so a clean run reproduces the numbers in Section 4 exactly.
