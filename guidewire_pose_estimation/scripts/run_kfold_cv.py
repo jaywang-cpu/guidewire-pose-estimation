@@ -152,11 +152,37 @@ def main():
         "total_runtime_sec": time.time() - t_global,
     }
 
-    out = os.path.join(
-        PKG_DIR, "results", "kfold_summary.json"
-    )
-    with open(out, "w") as f:
-        json.dump(summary, f, indent=2)
+    # Save per-fold rows + an aggregate row as CSV
+    import csv
+    out = os.path.join(PKG_DIR, "results", "kfold_summary.csv")
+    fields = ["fold", "n_test_images",
+              "euc_mean", "euc_ci_lo", "euc_ci_hi", "euc_median", "euc_std", "euc_p90",
+              "ang_mean", "ang_ci_lo", "ang_ci_hi", "ang_median", "ang_std", "ang_p90"]
+    with open(out, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        for i, m in enumerate(fold_metrics):
+            row = {"fold": i, "n_test_images": m.get("n_test_images", "")}
+            for k in ("euclidean", "angular"):
+                pre = "euc" if k == "euclidean" else "ang"
+                ci = m.get(f"{k}_ci") or [None, None]
+                row.update({
+                    f"{pre}_mean":   round(float(m[f"{k}_mean"]), 4),
+                    f"{pre}_ci_lo":  round(float(ci[0]), 4),
+                    f"{pre}_ci_hi":  round(float(ci[1]), 4),
+                    f"{pre}_median": round(float(m[f"{k}_median"]), 4),
+                    f"{pre}_std":    round(float(m[f"{k}_std"]), 4),
+                    f"{pre}_p90":    round(float(m[f"{k}_p90"]), 4),
+                })
+            w.writerow(row)
+        # Trailing summary row
+        w.writerow({"fold": "aggregate", "n_test_images": "",
+                    "euc_mean": round(float(pos_means.mean()), 4),
+                    "euc_std":  round(float(pos_means.std(ddof=1)), 4),
+                    "euc_median": round(float(np.median(pos_medians)), 4),
+                    "ang_mean": round(float(ang_means.mean()), 4),
+                    "ang_std":  round(float(ang_means.std(ddof=1)), 4),
+                    "ang_median": round(float(np.median(ang_medians)), 4)})
     print(f"\nSaved k-fold summary → {out}")
     print(f"Across {K} folds: pos = {pos_means.mean():.1f} ± {pos_means.std(ddof=1):.1f} px, "
           f"ang = {ang_means.mean():.2f} ± {ang_means.std(ddof=1):.2f}°")

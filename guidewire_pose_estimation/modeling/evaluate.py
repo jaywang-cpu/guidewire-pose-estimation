@@ -613,11 +613,62 @@ def compare_experiments(all_metrics, save_path=None):
     plt.show()
 
 
-def save_metrics(metrics: Dict, path: str):
-    """Save metrics to JSON (excluding raw arrays)."""
-    serializable = {k: v for k, v in metrics.items() if not k.startswith("_")}
-    with open(path, "w") as f:
-        json.dump(serializable, f, indent=2)
+_METRIC_FIELDS = [
+    "experiment", "scope", "n_samples",
+    "euc_mean", "euc_ci_lo", "euc_ci_hi", "euc_median", "euc_std", "euc_p90",
+    "ang_mean", "ang_ci_lo", "ang_ci_hi", "ang_median", "ang_std", "ang_p90",
+]
+
+
+def _metrics_to_rows(metrics: Dict, experiment: str) -> list:
+    """Flatten compute_all_metrics output to 3 rows (wire0, wire1, aggregate)."""
+    import csv  # noqa: F401
+    rows = []
+    for scope in ("wire0", "wire1", "aggregate"):
+        if scope not in metrics:
+            continue
+        v = metrics[scope]
+        ci_e = v.get("euclidean_ci") or [None, None]
+        ci_a = v.get("angular_ci") or [None, None]
+        rows.append({
+            "experiment":  experiment,
+            "scope":       scope,
+            "n_samples":   v.get("n_samples", ""),
+            "euc_mean":    round(float(v["euclidean_mean"]), 4),
+            "euc_ci_lo":   round(float(ci_e[0]), 4),
+            "euc_ci_hi":   round(float(ci_e[1]), 4),
+            "euc_median":  round(float(v["euclidean_median"]), 4),
+            "euc_std":     round(float(v["euclidean_std"]), 4),
+            "euc_p90":     round(float(v["euclidean_p90"]), 4),
+            "ang_mean":    round(float(v["angular_mean"]), 4),
+            "ang_ci_lo":   round(float(ci_a[0]), 4),
+            "ang_ci_hi":   round(float(ci_a[1]), 4),
+            "ang_median":  round(float(v["angular_median"]), 4),
+            "ang_std":     round(float(v["angular_std"]), 4),
+            "ang_p90":     round(float(v["angular_p90"]), 4),
+        })
+    return rows
+
+
+def save_metrics(metrics: Dict, path: str, experiment: str = None):
+    """Save per-experiment metrics to CSV (3 rows: wire0, wire1, aggregate).
+
+    `path` may carry either a .csv or .json extension; the CSV file is always
+    what gets written (the .json extension is silently coerced to .csv for
+    backwards-compat with older callers).
+    """
+    import csv
+    if path.endswith(".json"):
+        path = path[:-5] + ".csv"
+    if experiment is None:
+        # Recover experiment name from the filename, e.g. ablation_resnet34_metrics.csv
+        experiment = os.path.splitext(os.path.basename(path))[0].replace("_metrics", "")
+    rows = _metrics_to_rows(metrics, experiment)
+    with open(path, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=_METRIC_FIELDS)
+        w.writeheader()
+        for r in rows:
+            w.writerow(r)
 
 
 def generate_full_report(
@@ -638,8 +689,8 @@ def generate_full_report(
     print_metrics(metrics, config.experiment_name)
 
     save_metrics(metrics, os.path.join(
-        config.eval.results_dir, f"{config.experiment_name}_metrics.json"
-    ))
+        config.eval.results_dir, f"{config.experiment_name}_metrics.csv"
+    ), experiment=config.experiment_name)
 
     prefix = os.path.join(config.eval.figures_dir, config.experiment_name)
 

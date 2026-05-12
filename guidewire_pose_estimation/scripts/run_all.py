@@ -237,7 +237,8 @@ baseline_results = run_inference(
 )
 baseline_metrics = compute_all_metrics(baseline_results, config_baseline.eval)
 print_metrics(baseline_metrics, "Baseline ResNet-18")
-save_metrics(baseline_metrics, os.path.join(RESULTS_DIR, "baseline_metrics.json"))
+save_metrics(baseline_metrics, os.path.join(RESULTS_DIR, "baseline_metrics.csv"),
+             experiment="ResNet-18 (baseline)")
 
 # Training curves
 plot_training_curves(
@@ -322,7 +323,8 @@ for config_name, display_name in ablation_configs:
     )
     metrics_ab = compute_all_metrics(results_ab, cfg.eval)
     print_metrics(metrics_ab, display_name)
-    save_metrics(metrics_ab, os.path.join(RESULTS_DIR, f"{cfg.experiment_name}_metrics.json"))
+    save_metrics(metrics_ab, os.path.join(RESULTS_DIR, f"{cfg.experiment_name}_metrics.csv"),
+                 experiment=display_name)
 
     all_metrics[display_name] = metrics_ab
     all_histories[display_name] = history_ab
@@ -407,23 +409,31 @@ print("\n" + "=" * 70)
 print("STEP 6: Saving Final Summary")
 print("=" * 70)
 
-summary = {
-    "experiment": "Guidewire Pose Estimation - Final Results",
-    "dataset": {
-        "total_images": data_info["n_total"],
-        "train": data_info["n_train"],
-        "val": data_info["n_val"],
-        "test": data_info["n_test"],
-        "split_method": "block-based (block_size=10) to reduce data leakage",
-        "normalization": f"percentile p1={data_info['img_p1']:.1f}, p99={data_info['img_p99']:.1f}",
-    },
-    "results": {
-        name: {k: v for k, v in m["aggregate"].items()} for name, m in all_metrics.items()
-    },
-}
+# Write the aggregate-only headline view as a CSV (one row per experiment).
+import csv
+from modeling.evaluate import _METRIC_FIELDS, _metrics_to_rows
+headline_rows = []
+for name, m in all_metrics.items():
+    headline_rows.extend([r for r in _metrics_to_rows(m, name) if r["scope"] == "aggregate"])
+with open(os.path.join(RESULTS_DIR, "final_summary.csv"), "w", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=_METRIC_FIELDS)
+    w.writeheader()
+    for r in headline_rows:
+        w.writerow(r)
 
-with open(os.path.join(RESULTS_DIR, "final_summary.json"), "w") as f:
-    json.dump(summary, f, indent=2)
+# Also write the wide per-experiment / per-wire table for completeness.
+all_rows = []
+for name, m in all_metrics.items():
+    all_rows.extend(_metrics_to_rows(m, name))
+with open(os.path.join(RESULTS_DIR, "metrics_per_experiment.csv"), "w", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=_METRIC_FIELDS)
+    w.writeheader()
+    for r in all_rows:
+        w.writerow(r)
+
+print(f"Dataset split: total={data_info['n_total']}, train={data_info['n_train']}, "
+      f"val={data_info['n_val']}, test={data_info['n_test']}; "
+      f"normalization p1={data_info['img_p1']:.1f}, p99={data_info['img_p99']:.1f}")
 
 print(f"\nResults saved to: {RESULTS_DIR}")
 print(f"Figures saved to: {FIGURES_DIR}")

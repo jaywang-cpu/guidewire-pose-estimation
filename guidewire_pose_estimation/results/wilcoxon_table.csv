@@ -1,0 +1,11 @@
+comparison,metric,n,baseline_mean,candidate_mean,delta,wilcoxon_W,p_value,rank_biserial_r,significance
+ResNet-34 vs baseline,euclidean,100,124.4203,105.1242,-19.296,2030.0,8.876e-02,-0.196,ns
+ResNet-34 vs baseline,angular,100,25.4325,18.4578,-6.9747,2065.0,1.137e-01,-0.1822,ns
+Heatmap (ResNet-18) vs baseline,euclidean,100,124.4203,108.7027,-15.7176,1761.0,8.617e-03,-0.3026,**
+Heatmap (ResNet-18) vs baseline,angular,100,25.4325,20.0981,-5.3344,2446.0,7.859e-01,-0.0313,ns
+ResNet-50 vs baseline,euclidean,100,124.4203,121.817,-2.6033,2516.0,9.753e-01,-0.0036,ns
+ResNet-50 vs baseline,angular,100,25.4325,25.345,-0.0875,2070.0,1.177e-01,0.1802,ns
+No pre-training vs baseline,euclidean,100,124.4203,160.2062,35.786,1108.0,1.104e-06,0.5612,***
+No pre-training vs baseline,angular,100,25.4325,23.5846,-1.8478,1824.0,1.594e-02,0.2776,*
+ResNet-18 + augmentation vs baseline,euclidean,100,124.4203,242.2293,117.8091,815.0,4.114e-09,0.6772,***
+ResNet-18 + augmentation vs baseline,angular,100,25.4325,91.7035,66.271,319.0,3.326e-14,0.8737,***

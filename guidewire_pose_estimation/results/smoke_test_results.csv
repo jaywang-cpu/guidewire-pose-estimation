@@ -1,0 +1,6 @@
+name,actual_pos_mean,actual_ang_mean,expected_pos_mean,expected_ang_mean,status
+baseline,124.4203,25.4325,124.42,25.43,PASS
+resnet34,105.1242,18.4578,105.12,18.46,PASS
+resnet50,121.817,25.345,121.82,25.34,PASS
+no_pretrain,160.2062,23.5846,160.21,23.58,PASS
+heatmap,108.7027,20.0981,108.7,20.1,PASS

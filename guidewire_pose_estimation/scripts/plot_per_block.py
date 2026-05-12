@@ -118,22 +118,18 @@ def main():
     plt.savefig(out_path, dpi=150, bbox_inches="tight")
     print(f"\nSaved per-block figure → {out_path}")
 
-    # Save summary
-    out_json = os.path.join(
-        PKG_DIR, "results", "per_block_errors.json"
-    )
-    with open(out_json, "w") as f:
-        json.dump({
-            "model": "ResNet-34",
-            "rows": rows,
-            "note": (
-                "Each block_id corresponds to 10 consecutive images from the source "
-                "dataset, very likely from the same C-arm acquisition. The block index "
-                "is used as a proxy for anatomical-site / acquisition identity, since "
-                "no explicit site labels ship with the dataset."
-            )
-        }, f, indent=2)
-    print(f"Saved per-block JSON → {out_json}")
+    # Save summary as CSV
+    import csv
+    out_csv = os.path.join(PKG_DIR, "results", "per_block_errors.csv")
+    with open(out_csv, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=[
+            "block_id", "n_images", "pos_mean", "pos_median", "ang_mean", "ang_median"
+        ])
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: (round(float(v), 4) if isinstance(v, (int, float)) else v)
+                        for k, v in r.items()})
+    print(f"Saved per-block CSV → {out_csv}")
 
     pos_meds_arr = np.array(pos_meds)
     ang_meds_arr = np.array(ang_meds)

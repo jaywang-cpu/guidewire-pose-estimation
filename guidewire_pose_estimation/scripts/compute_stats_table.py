@@ -12,9 +12,15 @@ from scipy.stats import wilcoxon
 PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PKG_DIR)
 sys.path.insert(0, os.path.join(PKG_DIR, "modeling"))
-PATH = os.path.join(PKG_DIR, "results", "per_sample_errors.json")
+import csv
+PATH = os.path.join(PKG_DIR, "results", "per_sample_errors.csv")
+raw = {}
 with open(PATH) as f:
-    raw = json.load(f)
+    for row in csv.DictReader(f):
+        exp = row["experiment"]
+        raw.setdefault(exp, {"euclidean": [], "angular": []})
+        raw[exp]["euclidean"].append(float(row["euclidean_px"]))
+        raw[exp]["angular"].append(float(row["angular_deg"]))
 
 # Reorder so baseline is first
 order = [
@@ -25,7 +31,7 @@ order = [
     "No pre-training",
     "ResNet-18 + augmentation",
 ]
-data = {n: raw[n] for n in order}
+data = {n: raw[n] for n in order if n in raw}
 baseline = data["ResNet-18 (baseline)"]
 
 print(f"{'Comparison':<32} {'Metric':<6} {'Base mean':<10} {'Cand mean':<10} "
@@ -70,12 +76,24 @@ for name in order[1:]:
 alpha_bonf = 0.05 / 10
 print(f"\nBonferroni-corrected α (k=10): {alpha_bonf:.4f}")
 
-# Save
-out_path = os.path.join(
-    PKG_DIR, "results", "wilcoxon_table.json"
-)
-with open(out_path, "w") as f:
-    json.dump({"alpha_uncorrected": 0.05,
-               "alpha_bonferroni_k10": alpha_bonf,
-               "rows": rows}, f, indent=2)
-print(f"Saved → {out_path}")
+# Save CSV
+out_path = os.path.join(PKG_DIR, "results", "wilcoxon_table.csv")
+fields = ["comparison", "metric", "n", "baseline_mean", "candidate_mean", "delta",
+          "wilcoxon_W", "p_value", "rank_biserial_r", "significance"]
+with open(out_path, "w", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=fields)
+    w.writeheader()
+    for r in rows:
+        w.writerow({
+            "comparison":      r["comparison"],
+            "metric":          r["metric"],
+            "n":               r["n"],
+            "baseline_mean":   round(r["baseline_mean"], 4),
+            "candidate_mean":  round(r["candidate_mean"], 4),
+            "delta":           round(r["delta"], 4),
+            "wilcoxon_W":      round(r["wilcoxon_W"], 4),
+            "p_value":         f'{r["p_value"]:.3e}',
+            "rank_biserial_r": round(r["rank_biserial_r"], 4),
+            "significance":    r["significance"],
+        })
+print(f"Saved → {out_path}  (α_nominal=0.05, α_bonferroni_k10={alpha_bonf})")

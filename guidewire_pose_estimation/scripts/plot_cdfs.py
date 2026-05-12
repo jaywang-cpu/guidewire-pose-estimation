@@ -87,9 +87,16 @@ def main():
         all_errors[display_name] = {"euclidean": euc.tolist(), "angular": ang.tolist()}
         print(f"  {display_name}: N={len(euc)}, median pos={np.median(euc):.1f} px, median ang={np.median(ang):.1f}°")
 
-    # Save raw per-sample errors for downstream use
-    with open(os.path.join(results_dir, "per_sample_errors.json"), "w") as f:
-        json.dump(all_errors, f, indent=2)
+    # Save raw per-sample errors as long-format CSV for downstream use
+    import csv
+    csv_path = os.path.join(results_dir, "per_sample_errors.csv")
+    with open(csv_path, "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["experiment", "prediction_idx", "euclidean_px", "angular_deg"])
+        for exp_name, arrays in all_errors.items():
+            for i, (e, a) in enumerate(zip(arrays["euclidean"], arrays["angular"])):
+                w.writerow([exp_name, i, round(float(e), 4), round(float(a), 4)])
+    print(f"  wrote {csv_path}")
 
     # Plot CDFs side-by-side
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))

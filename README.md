@@ -52,7 +52,7 @@ Estimate the 2D tip position (x, y) and the angular orientation θ of each guide
     │   └── peek_data.py                   # quick dataset inspection
     ├── checkpoints/                       # trained weights (*.pth gitignored; download from Release)
     │   └── *_history.json                 # per-epoch training curves (committed)
-    ├── results/                           # all metric JSONs (final_summary, per_block, Wilcoxon...)
+    ├── results/                           # all metrics as CSV (one README.md inside lists every file)
     └── figures/                           # every PNG figure cited in the report
 ```
 
@@ -67,8 +67,12 @@ Estimate the 2D tip position (x, y) and the angular orientation θ of each guide
 | Training loop | `guidewire_pose_estimation/modeling/train.py` |
 | Bootstrap + Wilcoxon + plotting | `guidewire_pose_estimation/modeling/evaluate.py` |
 | What I tried that did not work | `TRAINING_NOTES.md` |
-| Raw per-experiment metrics | `guidewire_pose_estimation/results/final_summary.json` |
-| Pairwise Wilcoxon p-values + r_rb | `guidewire_pose_estimation/results/wilcoxon_table.json` |
+| Headline per-experiment metrics | `guidewire_pose_estimation/results/final_summary.csv` |
+| Per-wire and aggregate metrics | `guidewire_pose_estimation/results/metrics_per_experiment.csv` |
+| Pairwise Wilcoxon p-values + r_rb | `guidewire_pose_estimation/results/wilcoxon_table.csv` |
+| Per-acquisition breakdown | `guidewire_pose_estimation/results/per_block_errors.csv` |
+| Full per-sample errors (long format) | `guidewire_pose_estimation/results/per_sample_errors.csv` |
+| What each results CSV contains | `guidewire_pose_estimation/results/README.md` |
 
 ## Where to find each deliverable
 
@@ -189,7 +193,8 @@ The "before vs after" effect of these decisions on test-set numbers is in `TRAIN
 
 | File | What it contains |
 |---|---|
-| `guidewire_pose_estimation/results/final_summary.json` | All metrics + 95% bootstrap CIs |
+| `guidewire_pose_estimation/results/final_summary.csv` | All metrics + 95% bootstrap CIs (one row per experiment) |
+| `guidewire_pose_estimation/results/metrics_per_experiment.csv` | Per-wire + aggregate breakdown for every experiment |
 | `guidewire_pose_estimation/checkpoints/*.pth` | Trained model weights, one per experiment |
 | `guidewire_pose_estimation/checkpoints/*_history.json` | Per-epoch train/val loss + metric curves |
 | `guidewire_pose_estimation/figures/*.png` | Every figure cited in the report |

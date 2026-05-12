@@ -1,0 +1,601 @@
+experiment,prediction_idx,euclidean_px,angular_deg
+ResNet-34,0,59.5455,4.1952
+ResNet-34,1,106.3872,35.8449
+ResNet-34,2,28.1907,9.0214
+ResNet-34,3,69.7567,30.0191
+ResNet-34,4,28.9305,13.8436
+ResNet-34,5,40.7113,6.0743
+ResNet-34,6,34.8708,11.8996
+ResNet-34,7,45.4944,7.4199
+ResNet-34,8,36.4558,10.6195
+ResNet-34,9,61.2789,15.0758
+ResNet-34,10,51.4238,10.1383
+ResNet-34,11,61.8783,16.8068
+ResNet-34,12,67.9285,22.4157
+ResNet-34,13,68.6691,17.5982
+ResNet-34,14,50.6197,8.2093
+ResNet-34,15,85.8435,1.375
+ResNet-34,16,43.2192,13.1657
+ResNet-34,17,110.6185,5.7528
+ResNet-34,18,24.3721,22.0311
+ResNet-34,19,113.8782,19.8117
+ResNet-34,20,19.1685,0.3859
+ResNet-34,21,102.7476,16.7899
+ResNet-34,22,27.2204,2.457
+ResNet-34,23,110.5591,16.6655
+ResNet-34,24,35.3825,3.3658
+ResNet-34,25,127.3792,12.986
+ResNet-34,26,162.9525,6.9306
+ResNet-34,27,38.2602,2.8363
+ResNet-34,28,248.1865,1.2724
+ResNet-34,29,44.0737,0.7694
+ResNet-34,30,335.011,9.9364
+ResNet-34,31,45.1056,3.3786
+ResNet-34,32,64.652,4.8641
+ResNet-34,33,84.9992,1.8851
+ResNet-34,34,51.5494,4.1119
+ResNet-34,35,76.2802,2.8052
+ResNet-34,36,60.1408,4.7124
+ResNet-34,37,64.5319,0.2125
+ResNet-34,38,58.6307,5.577
+ResNet-34,39,54.8963,0.2053
+ResNet-34,40,36.8614,41.9267
+ResNet-34,41,139.7011,0.0892
+ResNet-34,42,36.3672,43.3537
+ResNet-34,43,134.586,0.0271
+ResNet-34,44,44.1022,41.5897
+ResNet-34,45,145.5528,1.9126
+ResNet-34,46,25.0093,42.9241
+ResNet-34,47,119.7917,0.9557
+ResNet-34,48,23.0701,46.9372
+ResNet-34,49,102.7291,4.5424
+ResNet-34,50,42.8412,46.8477
+ResNet-34,51,93.5811,4.216
+ResNet-34,52,84.8744,40.0648
+ResNet-34,53,118.5251,13.0931
+ResNet-34,54,121.6552,42.5647
+ResNet-34,55,168.926,12.2863
+ResNet-34,56,142.4589,5.9752
+ResNet-34,57,101.0617,48.5863
+ResNet-34,58,109.2928,7.1277
+ResNet-34,59,139.2911,53.2458
+ResNet-34,60,98.9159,16.3149
+ResNet-34,61,126.1659,6.7666
+ResNet-34,62,108.2656,16.7187
+ResNet-34,63,211.8749,7.4383
+ResNet-34,64,111.228,14.8737
+ResNet-34,65,210.1874,7.5243
+ResNet-34,66,120.8298,13.2136
+ResNet-34,67,230.6096,8.9125
+ResNet-34,68,143.3527,12.2012
+ResNet-34,69,224.957,9.2991
+ResNet-34,70,159.9562,7.2812
+ResNet-34,71,137.8304,8.0538
+ResNet-34,72,180.0334,8.5532
+ResNet-34,73,87.8765,7.0374
+ResNet-34,74,132.2812,7.7312
+ResNet-34,75,112.7459,8.0835
+ResNet-34,76,24.1811,22.4648
+ResNet-34,77,19.9307,43.7114
+ResNet-34,78,24.7384,21.4696
+ResNet-34,79,36.481,42.2215
+ResNet-34,80,87.245,5.394
+ResNet-34,81,101.7469,8.0048
+ResNet-34,82,261.3837,69.1191
+ResNet-34,83,107.7688,57.0006
+ResNet-34,84,428.2481,79.8111
+ResNet-34,85,149.0331,67.0605
+ResNet-34,86,399.321,86.4626
+ResNet-34,87,176.4669,52.7986
+ResNet-34,88,303.2876,72.694
+ResNet-34,89,236.1374,40.3311
+ResNet-34,90,246.1953,77.6948
+ResNet-34,91,301.9996,6.6558
+ResNet-34,92,44.787,10.1936
+ResNet-34,93,35.4567,2.4071
+ResNet-34,94,39.1594,12.3009
+ResNet-34,95,25.2359,0.6851
+ResNet-34,96,46.1332,13.0138
+ResNet-34,97,32.1912,0.0287
+ResNet-34,98,19.2017,12.2593
+ResNet-34,99,36.9018,0.261
+Heatmap (ResNet-18),0,112.8649,2.6386
+Heatmap (ResNet-18),1,187.5958,15.3703
+Heatmap (ResNet-18),2,73.3069,5.7846
+Heatmap (ResNet-18),3,94.6716,14.4095
+Heatmap (ResNet-18),4,13.1754,12.3593
+Heatmap (ResNet-18),5,28.4073,5.1389
+Heatmap (ResNet-18),6,24.9951,12.3698
+Heatmap (ResNet-18),7,30.5991,10.5195
+Heatmap (ResNet-18),8,12.512,16.1782
+Heatmap (ResNet-18),9,67.7471,26.807
+Heatmap (ResNet-18),10,22.6356,33.8481
+Heatmap (ResNet-18),11,91.2275,36.6913
+Heatmap (ResNet-18),12,103.8001,50.9194
+Heatmap (ResNet-18),13,33.6152,45.6094
+Heatmap (ResNet-18),14,8.9868,19.7527
+Heatmap (ResNet-18),15,107.2747,28.7399
+Heatmap (ResNet-18),16,13.3821,14.2539
+Heatmap (ResNet-18),17,87.4374,26.3626
+Heatmap (ResNet-18),18,20.3967,7.6722
+Heatmap (ResNet-18),19,81.0174,25.9806
+Heatmap (ResNet-18),20,32.8796,15.4502
+Heatmap (ResNet-18),21,52.9096,11.7769
+Heatmap (ResNet-18),22,30.1693,15.5577
+Heatmap (ResNet-18),23,66.4172,13.8428
+Heatmap (ResNet-18),24,27.2137,18.6731
+Heatmap (ResNet-18),25,75.1526,17.4316
+Heatmap (ResNet-18),26,103.7706,16.1304
+Heatmap (ResNet-18),27,46.4384,15.0628
+Heatmap (ResNet-18),28,119.7138,2.7645
+Heatmap (ResNet-18),29,20.7888,0.8842
+Heatmap (ResNet-18),30,200.5524,12.7451
+Heatmap (ResNet-18),31,31.4082,10.6887
+Heatmap (ResNet-18),32,5.5355,5.5886
+Heatmap (ResNet-18),33,31.3943,6.9534
+Heatmap (ResNet-18),34,19.3738,5.8458
+Heatmap (ResNet-18),35,19.1116,5.7981
+Heatmap (ResNet-18),36,14.3922,6.8243
+Heatmap (ResNet-18),37,24.0736,4.1069
+Heatmap (ResNet-18),38,29.4424,5.1374
+Heatmap (ResNet-18),39,24.6741,3.745
+Heatmap (ResNet-18),40,109.7503,38.7302
+Heatmap (ResNet-18),41,109.9291,0.0661
+Heatmap (ResNet-18),42,110.5858,38.0099
+Heatmap (ResNet-18),43,98.525,0.4389
+Heatmap (ResNet-18),44,120.6711,37.3785
+Heatmap (ResNet-18),45,105.5481,0.4739
+Heatmap (ResNet-18),46,110.124,37.2889
+Heatmap (ResNet-18),47,95.5523,0.2723
+Heatmap (ResNet-18),48,98.4009,34.9423
+Heatmap (ResNet-18),49,94.1438,2.2893
+Heatmap (ResNet-18),50,84.2562,32.9951
+Heatmap (ResNet-18),51,112.584,8.5113
+Heatmap (ResNet-18),52,65.746,38.5458
+Heatmap (ResNet-18),53,186.4339,18.1454
+Heatmap (ResNet-18),54,93.0243,39.0937
+Heatmap (ResNet-18),55,156.5498,21.5718
+Heatmap (ResNet-18),56,103.007,20.3333
+Heatmap (ResNet-18),57,41.3403,41.6433
+Heatmap (ResNet-18),58,90.1184,20.6426
+Heatmap (ResNet-18),59,115.2032,54.1116
+Heatmap (ResNet-18),60,156.589,12.5038
+Heatmap (ResNet-18),61,143.9982,27.5338
+Heatmap (ResNet-18),62,160.7848,13.5228
+Heatmap (ResNet-18),63,154.945,27.5078
+Heatmap (ResNet-18),64,165.3064,16.2143
+Heatmap (ResNet-18),65,172.603,27.8929
+Heatmap (ResNet-18),66,186.781,18.6332
+Heatmap (ResNet-18),67,180.44,27.127
+Heatmap (ResNet-18),68,204.9065,20.4403
+Heatmap (ResNet-18),69,183.9791,28.2854
+Heatmap (ResNet-18),70,238.0008,25.209
+Heatmap (ResNet-18),71,185.302,28.6107
+Heatmap (ResNet-18),72,254.5933,26.7701
+Heatmap (ResNet-18),73,151.5748,32.4707
+Heatmap (ResNet-18),74,238.1804,27.665
+Heatmap (ResNet-18),75,111.0295,41.1974
+Heatmap (ResNet-18),76,33.4744,22.4402
+Heatmap (ResNet-18),77,94.2119,34.6753
+Heatmap (ResNet-18),78,29.7017,23.2178
+Heatmap (ResNet-18),79,107.274,29.3218
+Heatmap (ResNet-18),80,60.1467,12.5719
+Heatmap (ResNet-18),81,164.5303,27.2928
+Heatmap (ResNet-18),82,52.9329,3.7333
+Heatmap (ResNet-18),83,248.9915,37.3966
+Heatmap (ResNet-18),84,502.6313,42.778
+Heatmap (ResNet-18),85,139.5723,101.3696
+Heatmap (ResNet-18),86,376.0439,60.2551
+Heatmap (ResNet-18),87,85.4557,9.1588
+Heatmap (ResNet-18),88,286.8866,41.5772
+Heatmap (ResNet-18),89,84.2264,13.3371
+Heatmap (ResNet-18),90,123.5066,12.0091
+Heatmap (ResNet-18),91,340.0159,25.8552
+Heatmap (ResNet-18),92,201.8793,4.4955
+Heatmap (ResNet-18),93,97.6501,4.9412
+Heatmap (ResNet-18),94,102.0239,2.6168
+Heatmap (ResNet-18),95,124.3762,2.0445
+Heatmap (ResNet-18),96,111.5452,1.1432
+Heatmap (ResNet-18),97,161.39,0.7875
+Heatmap (ResNet-18),98,67.8885,3.1974
+Heatmap (ResNet-18),99,92.3429,0.1081
+ResNet-50,0,72.8944,3.549
+ResNet-50,1,113.2441,34.3123
+ResNet-50,2,81.8228,23.4414
+ResNet-50,3,69.8517,37.0564
+ResNet-50,4,38.4482,19.8484
+ResNet-50,5,40.6093,4.5377
+ResNet-50,6,20.4668,18.1107
+ResNet-50,7,45.7712,6.8548
+ResNet-50,8,9.9337,16.9878
+ResNet-50,9,46.5131,12.2692
+ResNet-50,10,4.7078,16.716
+ResNet-50,11,79.4164,15.9006
+ResNet-50,12,75.7093,22.5321
+ResNet-50,13,17.1619,24.5374
+ResNet-50,14,26.4792,8.2109
+ResNet-50,15,77.062,0.0005
+ResNet-50,16,26.4214,2.0295
+ResNet-50,17,77.4599,4.7649
+ResNet-50,18,26.1871,9.2064
+ResNet-50,19,68.5862,34.8829
+ResNet-50,20,2.2724,1.7706
+ResNet-50,21,62.9767,5.4382
+ResNet-50,22,12.136,0.445
+ResNet-50,23,88.5245,8.2512
+ResNet-50,24,23.2619,1.117
+ResNet-50,25,137.4225,10.5841
+ResNet-50,26,154.0541,9.2663
+ResNet-50,27,26.5656,1.6687
+ResNet-50,28,176.9027,20.5092
+ResNet-50,29,118.21,17.015
+ResNet-50,30,186.6947,20.2698
+ResNet-50,31,106.481,13.0217
+ResNet-50,32,38.7301,0.6853
+ResNet-50,33,61.0036,1.5696
+ResNet-50,34,40.0549,7.0832
+ResNet-50,35,61.5582,7.3183
+ResNet-50,36,11.9487,7.6157
+ResNet-50,37,71.0842,7.5198
+ResNet-50,38,26.4374,8.2236
+ResNet-50,39,58.2648,5.0893
+ResNet-50,40,133.8374,51.2559
+ResNet-50,41,113.0794,18.5968
+ResNet-50,42,133.9217,51.6012
+ResNet-50,43,120.2875,17.5327
+ResNet-50,44,126.1262,54.9049
+ResNet-50,45,123.283,18.7409
+ResNet-50,46,112.8752,51.9968
+ResNet-50,47,158.4366,14.5536
+ResNet-50,48,99.7389,46.3108
+ResNet-50,49,132.0383,10.8086
+ResNet-50,50,82.4427,29.9851
+ResNet-50,51,170.7833,4.0972
+ResNet-50,52,58.781,30.907
+ResNet-50,53,239.5043,19.8321
+ResNet-50,54,68.4116,39.1688
+ResNet-50,55,255.9543,25.2604
+ResNet-50,56,183.0323,26.3088
+ResNet-50,57,58.6191,43.8689
+ResNet-50,58,145.2581,11.1638
+ResNet-50,59,92.7686,63.9346
+ResNet-50,60,77.5444,26.1315
+ResNet-50,61,72.2572,33.5755
+ResNet-50,62,111.5383,29.7364
+ResNet-50,63,137.5968,36.9812
+ResNet-50,64,149.588,30.5497
+ResNet-50,65,154.7293,38.8727
+ResNet-50,66,182.5251,32.6228
+ResNet-50,67,161.515,45.6429
+ResNet-50,68,205.0982,34.0389
+ResNet-50,69,168.5572,48.6735
+ResNet-50,70,255.3099,35.4395
+ResNet-50,71,168.3202,54.3367
+ResNet-50,72,267.3361,34.8767
+ResNet-50,73,156.6238,51.8032
+ResNet-50,74,190.7666,29.7703
+ResNet-50,75,61.0041,39.5966
+ResNet-50,76,81.6272,16.7042
+ResNet-50,77,128.6623,32.7985
+ResNet-50,78,134.5161,13.9661
+ResNet-50,79,116.3292,29.552
+ResNet-50,80,211.2974,2.5051
+ResNet-50,81,117.0107,51.1817
+ResNet-50,82,259.3925,47.9554
+ResNet-50,83,163.8981,69.284
+ResNet-50,84,286.2723,99.8719
+ResNet-50,85,327.0621,99.5207
+ResNet-50,86,330.2838,166.5668
+ResNet-50,87,267.0917,20.5517
+ResNet-50,88,280.6343,67.5386
+ResNet-50,89,276.9974,23.4969
+ResNet-50,90,249.4666,0.6099
+ResNet-50,91,272.6223,28.7052
+ResNet-50,92,146.8258,11.3503
+ResNet-50,93,192.7012,3.2826
+ResNet-50,94,157.0311,11.7469
+ResNet-50,95,116.3491,13.4337
+ResNet-50,96,107.334,7.9019
+ResNet-50,97,172.2288,10.0774
+ResNet-50,98,88.3373,1.535
+ResNet-50,99,84.908,0.6749
+ResNet-18 (baseline),0,38.3387,8.7257
+ResNet-18 (baseline),1,54.349,4.684
+ResNet-18 (baseline),2,34.6352,4.773
+ResNet-18 (baseline),3,35.2862,3.0671
+ResNet-18 (baseline),4,50.0121,8.6391
+ResNet-18 (baseline),5,39.7834,0.9642
+ResNet-18 (baseline),6,45.1075,8.53
+ResNet-18 (baseline),7,48.8366,0.7794
+ResNet-18 (baseline),8,40.6769,8.4743
+ResNet-18 (baseline),9,56.0833,0.2188
+ResNet-18 (baseline),10,52.1819,7.1796
+ResNet-18 (baseline),11,67.3271,0.12
+ResNet-18 (baseline),12,66.4954,22.0579
+ResNet-18 (baseline),13,50.6144,11.3135
+ResNet-18 (baseline),14,25.5286,14.7535
+ResNet-18 (baseline),15,82.4429,54.7342
+ResNet-18 (baseline),16,15.5059,13.3612
+ResNet-18 (baseline),17,70.8161,59.207
+ResNet-18 (baseline),18,11.7689,23.6407
+ResNet-18 (baseline),19,102.1378,59.5365
+ResNet-18 (baseline),20,34.7499,17.0495
+ResNet-18 (baseline),21,37.6939,16.6312
+ResNet-18 (baseline),22,15.9934,18.5341
+ResNet-18 (baseline),23,42.2931,19.4675
+ResNet-18 (baseline),24,8.8374,22.509
+ResNet-18 (baseline),25,66.9778,22.1318
+ResNet-18 (baseline),26,87.0672,22.3871
+ResNet-18 (baseline),27,16.7187,20.1954
+ResNet-18 (baseline),28,254.146,6.3693
+ResNet-18 (baseline),29,70.7652,1.3901
+ResNet-18 (baseline),30,273.4662,50.9196
+ResNet-18 (baseline),31,317.8823,50.1433
+ResNet-18 (baseline),32,113.8235,3.8553
+ResNet-18 (baseline),33,41.8067,8.4015
+ResNet-18 (baseline),34,67.4653,0.7376
+ResNet-18 (baseline),35,52.2469,8.0481
+ResNet-18 (baseline),36,59.4445,1.2578
+ResNet-18 (baseline),37,43.1682,6.2335
+ResNet-18 (baseline),38,52.7223,4.5736
+ResNet-18 (baseline),39,23.2433,3.3051
+ResNet-18 (baseline),40,202.0932,39.5573
+ResNet-18 (baseline),41,78.3782,1.2582
+ResNet-18 (baseline),42,189.0144,36.8795
+ResNet-18 (baseline),43,113.1054,0.9105
+ResNet-18 (baseline),44,187.9662,37.1572
+ResNet-18 (baseline),45,138.8688,1.2319
+ResNet-18 (baseline),46,153.643,41.0619
+ResNet-18 (baseline),47,97.6688,0.1397
+ResNet-18 (baseline),48,94.8271,38.2542
+ResNet-18 (baseline),49,98.5753,0.9814
+ResNet-18 (baseline),50,106.1822,34.7739
+ResNet-18 (baseline),51,153.4881,6.3908
+ResNet-18 (baseline),52,65.5112,27.1344
+ResNet-18 (baseline),53,182.7973,18.6196
+ResNet-18 (baseline),54,84.1831,44.2597
+ResNet-18 (baseline),55,219.5213,15.0385
+ResNet-18 (baseline),56,107.1679,1.0152
+ResNet-18 (baseline),57,163.665,59.2299
+ResNet-18 (baseline),58,84.1067,0.4536
+ResNet-18 (baseline),59,188.5752,61.0375
+ResNet-18 (baseline),60,230.3515,6.797
+ResNet-18 (baseline),61,211.1902,26.3072
+ResNet-18 (baseline),62,257.5964,7.7809
+ResNet-18 (baseline),63,208.5421,26.6969
+ResNet-18 (baseline),64,277.4447,8.1705
+ResNet-18 (baseline),65,224.0279,29.4799
+ResNet-18 (baseline),66,291.1871,10.8091
+ResNet-18 (baseline),67,215.9279,31.1538
+ResNet-18 (baseline),68,290.2367,2.6249
+ResNet-18 (baseline),69,227.3965,16.9597
+ResNet-18 (baseline),70,299.4634,3.0591
+ResNet-18 (baseline),71,201.9755,15.9333
+ResNet-18 (baseline),72,285.6669,1.7918
+ResNet-18 (baseline),73,193.3395,19.4046
+ResNet-18 (baseline),74,231.3244,6.3904
+ResNet-18 (baseline),75,101.3621,22.1303
+ResNet-18 (baseline),76,83.4548,36.8188
+ResNet-18 (baseline),77,124.6384,47.2831
+ResNet-18 (baseline),78,73.1076,23.5645
+ResNet-18 (baseline),79,133.8405,41.7973
+ResNet-18 (baseline),80,76.7478,15.377
+ResNet-18 (baseline),81,125.0243,71.558
+ResNet-18 (baseline),82,231.5633,26.9547
+ResNet-18 (baseline),83,107.1276,127.2642
+ResNet-18 (baseline),84,160.5326,27.6702
+ResNet-18 (baseline),85,276.2586,158.4322
+ResNet-18 (baseline),86,338.0171,26.1436
+ResNet-18 (baseline),87,202.0099,143.089
+ResNet-18 (baseline),88,245.3686,60.1555
+ResNet-18 (baseline),89,236.6417,136.4299
+ResNet-18 (baseline),90,224.937,160.9077
+ResNet-18 (baseline),91,288.9682,99.9632
+ResNet-18 (baseline),92,76.3044,2.5183
+ResNet-18 (baseline),93,27.1675,6.0257
+ResNet-18 (baseline),94,64.5743,1.2242
+ResNet-18 (baseline),95,42.1329,3.8438
+ResNet-18 (baseline),96,59.2087,0.3803
+ResNet-18 (baseline),97,65.3282,2.8725
+ResNet-18 (baseline),98,25.5468,0.4127
+ResNet-18 (baseline),99,28.7137,2.788
+No pre-training,0,103.8944,6.2051
+No pre-training,1,245.0559,33.7719
+No pre-training,2,26.4318,11.2308
+No pre-training,3,166.9465,35.2146
+No pre-training,4,30.3467,20.878
+No pre-training,5,114.4962,14.0887
+No pre-training,6,53.1858,24.4801
+No pre-training,7,89.9289,11.4087
+No pre-training,8,59.5922,31.8504
+No pre-training,9,98.1494,17.7503
+No pre-training,10,83.3355,46.2967
+No pre-training,11,111.0882,22.8007
+No pre-training,12,113.3807,32.3425
+No pre-training,13,100.6687,63.9797
+No pre-training,14,90.459,45.6127
+No pre-training,15,105.3538,12.5574
+No pre-training,16,60.7174,41.4143
+No pre-training,17,123.3446,19.0708
+No pre-training,18,47.6941,38.4717
+No pre-training,19,165.7182,27.4212
+No pre-training,20,32.5189,7.5971
+No pre-training,21,75.1443,3.5746
+No pre-training,22,36.0582,12.1941
+No pre-training,23,115.0762,10.2138
+No pre-training,24,69.2822,30.0284
+No pre-training,25,153.2733,26.7461
+No pre-training,26,270.1504,19.5918
+No pre-training,27,132.8191,53.0852
+No pre-training,28,374.5752,29.9994
+No pre-training,29,171.9435,44.5974
+No pre-training,30,435.1044,47.5405
+No pre-training,31,239.9742,45.856
+No pre-training,32,139.0661,4.8108
+No pre-training,33,78.8682,12.9018
+No pre-training,34,105.7938,1.5292
+No pre-training,35,88.6983,5.4381
+No pre-training,36,86.4872,0.8049
+No pre-training,37,77.1989,3.8199
+No pre-training,38,46.1012,4.7715
+No pre-training,39,63.6946,1.9995
+No pre-training,40,61.5122,60.0024
+No pre-training,41,110.4446,7.9092
+No pre-training,42,55.4901,59.5998
+No pre-training,43,109.7138,10.2264
+No pre-training,44,19.901,59.8574
+No pre-training,45,98.9073,19.0885
+No pre-training,46,11.44,59.4436
+No pre-training,47,96.5992,19.4122
+No pre-training,48,10.3569,58.9718
+No pre-training,49,113.0992,14.2907
+No pre-training,50,26.4375,56.7935
+No pre-training,51,121.7113,7.082
+No pre-training,52,177.3935,35.4031
+No pre-training,53,291.494,10.5168
+No pre-training,54,272.866,36.8833
+No pre-training,55,293.3021,23.3771
+No pre-training,56,163.5502,17.2405
+No pre-training,57,107.275,49.3052
+No pre-training,58,112.23,23.5523
+No pre-training,59,27.4984,52.6797
+No pre-training,60,207.9996,6.1576
+No pre-training,61,225.1128,26.6561
+No pre-training,62,224.9197,4.6659
+No pre-training,63,256.8414,28.2515
+No pre-training,64,240.3762,3.4173
+No pre-training,65,259.0087,25.855
+No pre-training,66,243.9574,5.061
+No pre-training,67,260.6459,24.6413
+No pre-training,68,247.7919,4.9519
+No pre-training,69,269.285,25.8581
+No pre-training,70,258.959,11.8404
+No pre-training,71,267.1704,29.5496
+No pre-training,72,270.1929,7.7272
+No pre-training,73,303.52,33.4882
+No pre-training,74,275.9453,12.8525
+No pre-training,75,281.1035,25.4475
+No pre-training,76,167.7485,22.6589
+No pre-training,77,281.3427,41.6067
+No pre-training,78,130.8092,24.2423
+No pre-training,79,246.6685,40.7953
+No pre-training,80,176.1065,41.4133
+No pre-training,81,227.392,7.6585
+No pre-training,82,226.4323,27.4373
+No pre-training,83,273.8186,7.6671
+No pre-training,84,241.6267,26.9906
+No pre-training,85,382.4774,6.6715
+No pre-training,86,281.3752,30.209
+No pre-training,87,270.2836,26.6265
+No pre-training,88,349.8478,26.2006
+No pre-training,89,238.2547,33.0675
+No pre-training,90,233.6661,28.5889
+No pre-training,91,385.3296,22.4981
+No pre-training,92,104.7002,9.1909
+No pre-training,93,81.4313,12.7716
+No pre-training,94,127.06,6.2958
+No pre-training,95,110.2212,12.125
+No pre-training,96,90.1666,4.5297
+No pre-training,97,103.7537,6.4964
+No pre-training,98,67.8082,5.3079
+No pre-training,99,66.6348,5.4122
+ResNet-18 + augmentation,0,276.4383,86.8923
+ResNet-18 + augmentation,1,189.9919,169.8076
+ResNet-18 + augmentation,2,257.7519,89.5333
+ResNet-18 + augmentation,3,176.4615,174.2757
+ResNet-18 + augmentation,4,239.4693,99.1215
+ResNet-18 + augmentation,5,159.4765,179.272
+ResNet-18 + augmentation,6,238.6756,98.2869
+ResNet-18 + augmentation,7,160.918,175.7248
+ResNet-18 + augmentation,8,237.1706,96.3069
+ResNet-18 + augmentation,9,159.925,171.5258
+ResNet-18 + augmentation,10,204.3793,173.9777
+ResNet-18 + augmentation,11,223.1071,75.2341
+ResNet-18 + augmentation,12,233.5103,68.861
+ResNet-18 + augmentation,13,189.1231,176.6007
+ResNet-18 + augmentation,14,225.8138,63.132
+ResNet-18 + augmentation,15,180.8625,179.9771
+ResNet-18 + augmentation,16,212.6245,56.0463
+ResNet-18 + augmentation,17,173.4857,176.124
+ResNet-18 + augmentation,18,213.4652,48.7584
+ResNet-18 + augmentation,19,172.6448,171.5311
+ResNet-18 + augmentation,20,356.4552,0.0599
+ResNet-18 + augmentation,21,378.1536,127.3387
+ResNet-18 + augmentation,22,340.1772,3.6576
+ResNet-18 + augmentation,23,374.7512,123.4571
+ResNet-18 + augmentation,24,318.4703,6.6559
+ResNet-18 + augmentation,25,376.6326,120.0266
+ResNet-18 + augmentation,26,371.448,116.8127
+ResNet-18 + augmentation,27,288.5363,9.5433
+ResNet-18 + augmentation,28,373.2456,115.3727
+ResNet-18 + augmentation,29,286.8418,11.2698
+ResNet-18 + augmentation,30,366.6989,111.8372
+ResNet-18 + augmentation,31,274.6047,12.8153
+ResNet-18 + augmentation,32,358.9878,86.7842
+ResNet-18 + augmentation,33,345.2726,9.2792
+ResNet-18 + augmentation,34,322.6869,42.2188
+ResNet-18 + augmentation,35,356.5179,22.938
+ResNet-18 + augmentation,36,334.2567,53.3977
+ResNet-18 + augmentation,37,361.5687,19.106
+ResNet-18 + augmentation,38,343.0537,33.8416
+ResNet-18 + augmentation,39,367.9669,23.7297
+ResNet-18 + augmentation,40,101.6049,115.0228
+ResNet-18 + augmentation,41,283.3015,127.7568
+ResNet-18 + augmentation,42,125.1352,114.2812
+ResNet-18 + augmentation,43,281.5491,106.4939
+ResNet-18 + augmentation,44,177.6624,114.5782
+ResNet-18 + augmentation,45,277.4985,103.8861
+ResNet-18 + augmentation,46,193.8683,108.2355
+ResNet-18 + augmentation,47,279.3343,74.5246
+ResNet-18 + augmentation,48,13.8809,32.1247
+ResNet-18 + augmentation,49,356.5533,63.0059
+ResNet-18 + augmentation,50,42.8927,50.2547
+ResNet-18 + augmentation,51,347.273,74.4037
+ResNet-18 + augmentation,52,75.5208,86.3532
+ResNet-18 + augmentation,53,281.1957,113.5871
+ResNet-18 + augmentation,54,77.7721,115.9907
+ResNet-18 + augmentation,55,292.1221,144.6326
+ResNet-18 + augmentation,56,296.3409,152.4196
+ResNet-18 + augmentation,57,78.5896,118.417
+ResNet-18 + augmentation,58,298.0492,161.7981
+ResNet-18 + augmentation,59,76.5412,118.8552
+ResNet-18 + augmentation,60,201.7934,126.9286
+ResNet-18 + augmentation,61,162.381,51.1527
+ResNet-18 + augmentation,62,177.4524,126.1149
+ResNet-18 + augmentation,63,134.5965,77.0165
+ResNet-18 + augmentation,64,69.6767,134.5172
+ResNet-18 + augmentation,65,187.2878,72.0854
+ResNet-18 + augmentation,66,18.5596,127.2952
+ResNet-18 + augmentation,67,189.0623,66.617
+ResNet-18 + augmentation,68,33.6246,98.1278
+ResNet-18 + augmentation,69,182.5697,66.1465
+ResNet-18 + augmentation,70,68.6743,68.5272
+ResNet-18 + augmentation,71,151.481,67.7323
+ResNet-18 + augmentation,72,117.1547,138.43
+ResNet-18 + augmentation,73,104.5174,67.4141
+ResNet-18 + augmentation,74,183.1276,133.8884
+ResNet-18 + augmentation,75,164.3093,80.4875
+ResNet-18 + augmentation,76,144.5136,51.558
+ResNet-18 + augmentation,77,159.7346,13.6342
+ResNet-18 + augmentation,78,132.7616,52.7366
+ResNet-18 + augmentation,79,159.3759,17.532
+ResNet-18 + augmentation,80,303.6666,139.8661
+ResNet-18 + augmentation,81,340.0273,158.6361
+ResNet-18 + augmentation,82,297.8814,135.135
+ResNet-18 + augmentation,83,320.5508,154.9587
+ResNet-18 + augmentation,84,263.8875,154.9292
+ResNet-18 + augmentation,85,331.9274,170.0796
+ResNet-18 + augmentation,86,267.2583,108.8497
+ResNet-18 + augmentation,87,272.3885,48.1554
+ResNet-18 + augmentation,88,258.4887,63.8592
+ResNet-18 + augmentation,89,175.0747,55.0675
+ResNet-18 + augmentation,90,201.7309,61.5609
+ResNet-18 + augmentation,91,279.7127,68.6148
+ResNet-18 + augmentation,92,433.1075,123.7492
+ResNet-18 + augmentation,93,192.3606,58.6154
+ResNet-18 + augmentation,94,598.7464,95.868
+ResNet-18 + augmentation,95,202.1197,54.287
+ResNet-18 + augmentation,96,637.1779,49.9669
+ResNet-18 + augmentation,97,255.2258,51.1603
+ResNet-18 + augmentation,98,624.3998,50.2943
+ResNet-18 + augmentation,99,246.2374,51.0036

@@ -46,9 +46,9 @@ def main():
     print_metrics(metrics, "ResNet-18 + augmentation")
 
     os.makedirs(cfg.eval.results_dir, exist_ok=True)
-    out_path = os.path.join(cfg.eval.results_dir, "ablation_with_aug_metrics.json")
-    with open(out_path, "w") as f:
-        json.dump(metrics, f, indent=2, default=str)
+    from modeling.evaluate import save_metrics
+    out_path = os.path.join(cfg.eval.results_dir, "ablation_with_aug_metrics.csv")
+    save_metrics(metrics, out_path, experiment="ResNet-18 + augmentation")
     print(f"Saved metrics → {out_path}")
 
 

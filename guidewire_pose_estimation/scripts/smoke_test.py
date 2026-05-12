@@ -101,30 +101,22 @@ def main():
               f"ang={got_ang:5.2f} (exp {exp_ang:5.2f}, Δ={da:+.2f})")
         results.append((name, got_pos, got_ang, exp_pos, exp_ang, flag))
 
-    # Persist a JSON record of the smoke test for the grader
-    out_path = os.path.join(
-        PKG_DIR, "results", "smoke_test_results.json"
-    )
-    with open(out_path, "w") as f:
-        json.dump(
-            {
-                "device": str(device),
-                "tolerances": {"pos_px": POS_TOL, "ang_deg": ANG_TOL},
-                "rows": [
-                    {
-                        "name": r[0],
-                        "actual_pos_mean": r[1],
-                        "actual_ang_mean": r[2],
-                        "expected_pos_mean": r[3],
-                        "expected_ang_mean": r[4],
-                        "status": r[5],
-                    } for r in results
-                ],
-                "all_pass": all_ok,
-            },
-            f, indent=2,
-        )
-    print(f"\nSaved smoke-test log → {out_path}")
+    # Persist a CSV record of the smoke test for the grader
+    import csv
+    out_path = os.path.join(PKG_DIR, "results", "smoke_test_results.csv")
+    with open(out_path, "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["name", "actual_pos_mean", "actual_ang_mean",
+                    "expected_pos_mean", "expected_ang_mean", "status"])
+        for r in results:
+            w.writerow([
+                r[0],
+                "" if r[1] is None else round(r[1], 4),
+                "" if r[2] is None else round(r[2], 4),
+                round(r[3], 4), round(r[4], 4), r[5],
+            ])
+    print(f"\nSaved smoke-test log → {out_path}  "
+          f"(device={device}, pos_tol=±{POS_TOL}px, ang_tol=±{ANG_TOL}°)")
     if all_ok:
         print("\n✓ All checkpoints reproduce within tolerance.")
         sys.exit(0)
