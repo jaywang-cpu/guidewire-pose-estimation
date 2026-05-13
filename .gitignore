@@ -15,7 +15,7 @@
 
 # Unzipped Overleaf bundle (the .zip is committed; the unzipped tree would
 # duplicate every figure we already commit under guidewire_pose_estimation/figures/)
-reports/overleaf_bundle/
+reports/overleaf_bundle*/
 
 # Mac OS-specific storage files
 .DS_Store
